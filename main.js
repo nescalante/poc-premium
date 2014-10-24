@@ -1,5 +1,5 @@
 var ko = require('knockout');
-var ContractPremium = require('./models').ContractPremium
+var ContractPremium = require('./models').ContractPremium;
 
 // model definition
 var model = new ContractPremium();

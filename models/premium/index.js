@@ -1,3 +1,5 @@
+'use strict';
+
 var ko = require('knockout');
 var Month = require('./month.js');
 var config = require('../config');

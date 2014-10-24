@@ -1,0 +1,4 @@
+#!/bin/bash
+
+npm test
+browserify main.js -d -o bundle.js
