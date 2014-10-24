@@ -3,16 +3,22 @@
 <head>
   <title>POC - Premium</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="styles/premium.css">
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-  <a class="btn btn-default">test</a>
+  <div class="container">
+    <h2>2014</h2>
+  </div>
   <div class="container" data-bind="foreach: take(4)(months)">
     <div class="row" data-bind="foreach: $data">
-      <div class="col-md-3">
+      <div class="col-md-3 month">
+        <h4 class="pull-left" data-bind="text: number + ' ' + name"></h4>
+        <a class="pull-right btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#condition-modal"></span></a>
+        <div class="clearfix"></div>
         <div class="btn-group">
-          <button type="button" class="btn btn-default" data-bind="text: a">Action</button>
+          <button type="button" class="btn btn-default">Action</button>
           <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
@@ -24,6 +30,80 @@
             <li class="divider"></li>
             <li><a href="#">Separated link</a></li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="condition-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 80%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">New Contract Condition</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Service Details</label>
+              <div class="col-sm-10">
+                <label class="col-sm-2 control-label">Service Type</label>
+                <div class="col-sm-4">
+                  <select class="form-control"></select>
+                </div>
+                <label class="col-sm-2 control-label">Subscribers Package</label>
+                <div class="col-sm-4">
+                  <select class="form-control"></select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <label class="col-sm-2 control-label">Product</label>
+                <div class="col-sm-4">
+                  <select class="form-control"></select>
+                </div>
+                <label class="col-sm-2 control-label">Invoice Group</label>
+                <div class="col-sm-4">
+                  <select class="form-control"></select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <label class="col-sm-2 control-label">Category</label>
+                <div class="col-sm-4">
+                  <select class="form-control"></select>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Billing Details</label>
+              <div class="col-sm-10">
+                <label class="col-sm-2 control-label">Billing Method</label>
+                <div class="col-sm-4">
+                  <select class="form-control"></select>
+                </div>
+                <label class="col-sm-2 control-label">Price Method</label>
+                <div class="col-sm-4">
+                  <select class="form-control"></select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Discounts Area</label>
+              <div class="col-sm-10">
+                <label class="col-sm-2 control-label">Discounts</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" placeholder="Insert a discount">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Create</button>
         </div>
       </div>
     </div>

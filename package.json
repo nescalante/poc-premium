@@ -1,12 +1,13 @@
 {
   "name": "poc-premium",
   "version": "0.0.0",
-  "description": "Mostrar una grilla que representan los meses del año (3 x 4), en cada celda hay que poder agregar elementos de tipo Price Method. \r Esos elementos de Price Method pueden ser de 3 tipos:\r Flat Fee. Cuando el elemento es de este tipo, solo hay que cargar cual es el monto del Fee.\r Revenue Share. Cuando el elemento es de este tipo, solo hay que cargar el % de share.\r Suscribers. Si es de este tipo, hay que configurar dos parámetros, un Checkbox y una tabla que indica rangos y montos. Ejemplo (1 a 10 -> $100, 11 a 50 -> $80) El rango puede ser 1 a infinito. El checkbox determina como se procesa el rango si es incremental o no, debería decir \"Incremental\"",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify main.js -d -o bundle.js",
-    "start": "watchify main.js -d -o bundle.js"
+    "start": "watchify main.js -d -o bundle.js",
+    "install": "npm install browserify -g watchify -g bower -g & bower install"
   },
   "author": "",
   "private": true

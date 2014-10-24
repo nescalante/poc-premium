@@ -1,4 +1,5 @@
 var ko = require('knockout');
+var Month = require('./month.js');
 
 module.exports = ContractPremium;
 
@@ -8,20 +9,19 @@ function ContractPremium() {
   self.months = ko.observableArray();
 
   // testing data
-  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(function (i, ix) {
-    var item = {};
-
-    item.a = "somuchcodeforourmind"[ix];
-    item.b = ix;
-
-    self.months.push(item);
-  });
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (i) {
+    return new Month(i);
+  }).forEach(addMonth);
 
   self.take = function (count) {
     return function(property) {
       return ko.computed(take.bind(self, property, count));
     };
   };
+
+  function addMonth(month) {
+    self.months.push(month);
+  }
 }
 
 function take(property, count) {

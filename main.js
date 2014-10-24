@@ -5,4 +5,3 @@ var ContractPremium = require('./models').ContractPremium
 var model = new ContractPremium();
 
 ko.applyBindings(model);
-
