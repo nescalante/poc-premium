@@ -15,7 +15,9 @@
     <div class="row" data-bind="foreach: $data">
       <div class="col-md-3 month">
         <h4 class="pull-left" data-bind="text: number + ' ' + name"></h4>
-        <a class="pull-right btn btn-default btn-sm" data-toggle="modal" data-target="#condition-modal"><span class="glyphicon glyphicon-plus"></span></a>
+        <a class="pull-right btn btn-default btn-sm" data-bind="click: newCondition" data-toggle="modal" data-target="#condition-modal">
+          <span class="glyphicon glyphicon-plus"></span>
+        </a>
         <div class="clearfix"></div>
         <div class="btn-group">
           <button type="button" class="btn btn-default">Action</button>
@@ -31,12 +33,15 @@
             <li><a href="#">Separated link</a></li>
           </ul>
         </div>
+        <div data-bind="foreach: conditions">
+          <p data-bind="text: billingMethod().name"></p>
+        </div>
       </div>
     </div>
   </div>
   <div class="modal fade" id="condition-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width: 80%">
-      <div class="modal-content">
+      <div class="modal-content" data-bind="with: selectedCondition">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 class="modal-title" id="myModalLabel">New Contract Condition</h4>
@@ -82,7 +87,7 @@
               <div class="col-sm-10">
                 <label class="col-sm-2 control-label">Billing Method</label>
                 <div class="col-sm-4">
-                  <select class="form-control"></select>
+                  <select class="form-control" data-bind="value: billingMethod, options: $root.billingMethods, optionsText: 'name', optionsCaption: 'Select a billing method'"></select>
                 </div>
                 <label class="col-sm-2 control-label">Price Method</label>
                 <div class="col-sm-4">
@@ -103,7 +108,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Create</button>
+          <button type="button" class="btn btn-primary" data-bind="click: addCondition" data-dismiss="modal">Create</button>
         </div>
       </div>
     </div>
