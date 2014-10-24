@@ -1,3 +1,8 @@
 var ko = require('knockout');
+var ContractPremium = require('./models').ContractPremium
 
-ko.applyBindings({ test: '123' });
+// model definition
+var model = new ContractPremium();
+
+ko.applyBindings(model);
+

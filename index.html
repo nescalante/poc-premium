@@ -8,11 +8,11 @@
 </head>
 <body>
   <a class="btn btn-default">test</a>
-  <div class="container">
-    <div class="row">
+  <div class="container" data-bind="foreach: take(4)(months)">
+    <div class="row" data-bind="foreach: $data">
       <div class="col-md-3">
         <div class="btn-group">
-          <button type="button" class="btn btn-default">Action</button>
+          <button type="button" class="btn btn-default" data-bind="text: a">Action</button>
           <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
@@ -26,19 +26,6 @@
           </ul>
         </div>
       </div>
-      <div class="col-md-3">
-        <p>such test</p>
-        <p>very poc</p>
-        <p data-bind="text: test"></p>
-      </div>
-      <div class="col-md-3">3</div>
-      <div class="col-md-3">4</div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">1</div>
-      <div class="col-md-3"><a class="btn btn-default">test</a></div>
-      <div class="col-md-3">3</div>
-      <div class="col-md-3">4</div>
     </div>
   </div>
   <script src="bundle.js"></script>

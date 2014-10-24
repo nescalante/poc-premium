@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify main.js -o bundle.js"
+    "build": "browserify main.js -d -o bundle.js",
+    "start": "watchify main.js -d -o bundle.js"
   },
   "author": "",
   "private": true
