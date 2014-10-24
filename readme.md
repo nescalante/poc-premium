@@ -1,3 +1,5 @@
+![Calendar](https://raw.githubusercontent.com/nescalante/poc-premium/master/resources/Fox%20Contracts%20A%20-%20Calendario.jpg?token=AB-4UwJeWEJeWsjeRF32sTQOWC-LQcdKks5UU8ljwA%3D%3D)
+
 Mostrar una grilla que representan los meses del año (3 x 4), en cada celda hay que poder agregar elementos de tipo Price Method. 
 Esos elementos de Price Method pueden ser de 3 tipos:
 Flat Fee. Cuando el elemento es de este tipo, solo hay que cargar cual es el monto del Fee.
