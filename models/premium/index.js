@@ -19,7 +19,16 @@ function ContractPremium() {
   }).forEach(addMonth);
 
   self.months()[0].addCondition({
-    billingMethod: config.billingMethods[0]
+    billingMethod: config.billingMethods[0], // flat fee
+    signal: 'HD Basic',
+    package: 'Premium Fox Sports',
+    price: 0,
+  });
+
+  self.months()[0].addCondition({
+    billingMethod: config.billingMethods[1], // revenue share
+    signal: 'HD Basic',
+    package: 'Premium Fox Sports',
   });
 
   function addMonth(month) {

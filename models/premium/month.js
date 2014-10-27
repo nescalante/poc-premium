@@ -2,6 +2,7 @@
 
 var ko = require('knockout');
 var Condition = require('./condition.js');
+var ConditionRange = require('./range.js');
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 module.exports = Month;
@@ -21,6 +22,21 @@ function Month(number, parent) {
     var obj = new Condition(self);
 
     obj.billingMethod(condition.billingMethod);
+    obj.signal(condition.signal);
+    obj.package(condition.package);
+    obj.price(condition.price);
+
+    (condition.ranges || []).forEach(function (i) {
+      var range = new ConditionRange(obj);
+
+      range.from(i.from);
+      range.to(i.to);
+      range.price(i.price);
+      range.percentage(i.percentage);
+
+      obj.ranges.push(range);
+    });
+
     self.conditions.push(obj)
   };
 

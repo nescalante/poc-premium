@@ -1,3 +1,22 @@
 .month h4 + a {
   margin-top: 10px;
 }
+
+.price div:before {
+  content: '$';
+  position: absolute;
+  z-index: 1;
+  height: 26px;
+  line-height: 26px;
+  width: 15px;
+  text-align: center;
+}
+
+.month-detail .price input[type=number] {
+  padding-right: 0;
+}
+
+.month-detail .detail-title {
+  font-weight: bold;
+  padding-right: 10px;
+}

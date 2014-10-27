@@ -7,8 +7,8 @@ var methods = [{
   name: 'Revenue Share',
   template: 'revenue-share',
 }, {
-  name: 'Subscribers',
-  template: 'subscribers',
+  name: 'Actual Subscribers',
+  template: 'actual-subscribers',
 }];
 
 module.exports = methods;
