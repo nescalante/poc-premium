@@ -1,4 +1,4 @@
-![Calendar](https://raw.githubusercontent.com/nescalante/poc-premium/master/resources/Fox%20Contracts%20A%20-%20Calendario.jpg?token=AB-4UwJeWEJeWsjeRF32sTQOWC-LQcdKks5UU8ljwA%3D%3D)
+![Calendar](https://raw.githubusercontent.com/nescalante/poc-premium/master/resources/Fox%20Contracts%20C%20-%20Linea%20del%20tiempo%20Vertical.jpg?token=AB-4U3BpvfDdvckp971MyuG8qvelLK3Vks5UV5g4wA%3D%3D)
 
 Mostrar una grilla que representan los meses del año (3 x 4), en cada celda hay que poder agregar elementos de tipo Price Method. 
 Esos elementos de Price Method pueden ser de 3 tipos:
