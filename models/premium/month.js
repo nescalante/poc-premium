@@ -16,4 +16,15 @@ function Month(number, parent) {
   self.newCondition = function() {
     parent.selectedCondition(new Condition(self));
   };
+
+  self.addCondition = function(condition) {
+    var obj = new Condition(self);
+
+    obj.billingMethod(condition.billingMethod);
+    self.conditions.push(obj)
+  };
+
+  self.template = function(condition) {
+    return condition.billingMethod().template;
+  };
 }

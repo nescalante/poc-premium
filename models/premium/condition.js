@@ -9,7 +9,7 @@ function Condition(parent) {
 
   self.billingMethod = ko.observable();
 
-  self.addCondition = function () {
+  self.addToMonth = function () {
     parent.conditions.push(self);
   };
 }

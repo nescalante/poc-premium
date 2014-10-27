@@ -18,6 +18,10 @@ function ContractPremium() {
     return new Month(i, self);
   }).forEach(addMonth);
 
+  self.months()[0].addCondition({
+    billingMethod: config.billingMethods[0]
+  });
+
   function addMonth(month) {
     self.months.push(month);
   }

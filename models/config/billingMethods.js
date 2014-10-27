@@ -1,11 +1,14 @@
 'use strict';
 
 var methods = [{
-  name: 'Flat Fee'
+  name: 'Flat Fee',
+  template: 'flat-fee',
 }, {
-  name: 'Revenue Share'
+  name: 'Revenue Share',
+  template: 'revenue-share',
 }, {
-  name: 'Subscribers'
+  name: 'Subscribers',
+  template: 'subscribers',
 }];
 
 module.exports = methods;
