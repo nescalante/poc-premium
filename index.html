@@ -42,11 +42,11 @@
               <div class="col-sm-10">
                 <label class="col-sm-2 control-label">Service Type</label>
                 <div class="col-sm-4">
-                  <select class="form-control"></select>
+                  <select class="form-control" data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
                 </div>
                 <label class="col-sm-2 control-label">Subscribers Package</label>
                 <div class="col-sm-4">
-                  <select class="form-control"></select>
+                  <select class="form-control" data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a subscriber package'"></select>
                 </div>
               </div>
             </div>
@@ -54,11 +54,11 @@
               <div class="col-sm-offset-2 col-sm-10">
                 <label class="col-sm-2 control-label">Product</label>
                 <div class="col-sm-4">
-                  <select class="form-control"></select>
+                  <select class="form-control" data-bind="enable: serviceType, value: product, options: $root.productsFor(serviceType), optionsText: 'name', optionsCaption: 'Select a ' + (serviceType() ? 'product' : 'service type first')"></select>
                 </div>
                 <label class="col-sm-2 control-label">Invoice Group</label>
                 <div class="col-sm-4">
-                  <select class="form-control"></select>
+                  <select class="form-control" data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@
               <div class="col-sm-offset-2 col-sm-10">
                 <label class="col-sm-2 control-label">Category</label>
                 <div class="col-sm-4">
-                  <select class="form-control"></select>
+                  <input type="text" class="form-control" />
                 </div>
               </div>
             </div>
@@ -80,7 +80,7 @@
                 </div>
                 <label class="col-sm-2 control-label">Price Method</label>
                 <div class="col-sm-4">
-                  <select class="form-control"></select>
+                  <select class="form-control" data-bind="value: priceMethod, options: $root.priceMethods, optionsText: 'name', optionsCaption: 'Select a price method'"></select>
                 </div>
               </div>
             </div>
@@ -111,17 +111,17 @@
       <div class="col-md-3">
         <p>
           <span class="detail-title">Signal</span>
-          <span data-bind="text: signal"></span>
+          <span data-bind="text: serviceType"></span>
         </p>
         <p>
           <span class="detail-title">Package</span>
-          <span data-bind="text: package"></span>
+          <span data-bind="text: subscribersPackage"></span>
         </p>
       </div>
       <div class="col-md-7">
         <div class="row">
           <div class="col-md-offset-9 col-md-3 price">
-            <b>Price</b>
+            <b>Fee</b>
             <div>
               <input type="number" class="col-md-12" data-bind="value: price" />
             </div>
@@ -138,16 +138,19 @@
       <div class="col-md-3">
         <p>
           <span class="detail-title">Signal</span>
-          <span data-bind="text: signal"></span>
+          <span data-bind="text: serviceType"></span>
         </p>
         <p>
           <span class="detail-title">Package</span>
-          <span data-bind="text: package"></span>
+          <span data-bind="text: subscribersPackage"></span>
         </p>
       </div>
       <div class="col-md-7">
         <div class="row">
-          <div class="col-md-offset-3 col-md-3">
+          <div class="col-md-3">
+            <b>Default</b>
+          </div>
+          <div class="col-md-3">
             <b>From</b>
           </div>
           <div class="col-md-3">
@@ -159,14 +162,19 @@
         </div>
         <!-- ko foreach: ranges -->
         <div class="row">
-          <div class="col-md-offset-3 col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: from" />
+          <!-- ko ifnot: $index -->
+          <div class="col-md-3">
+            <input type="number" class="col-md-12" data-bind="value: $parent.default, valueUpdate: 'afterkeydown'" />
+          </div>
+          <!-- /ko -->
+          <div data-bind="css: $index() && 'col-md-offset-3'" class="col-md-3">
+            <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
           </div>
           <div class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: to" />
+            <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
           </div>
           <div class="col-md-3 price">
-            <input type="number" class="col-md-12" data-bind="value: price" />
+            <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
           </div>
         </div>
         <!-- /ko -->
@@ -181,16 +189,19 @@
       <div class="col-md-3">
         <p>
           <span class="detail-title">Signal</span>
-          <span data-bind="text: signal"></span>
+          <span data-bind="text: serviceType"></span>
         </p>
         <p>
           <span class="detail-title">Package</span>
-          <span data-bind="text: package"></span>
+          <span data-bind="text: subscribersPackage"></span>
         </p>
       </div>
       <div class="col-md-7">
         <div class="row">
-          <div class="col-md-offset-3 col-md-3">
+          <div class="col-md-3">
+            <b>Default</b>
+          </div>
+          <div class="col-md-3">
             <b>From</b>
           </div>
           <div class="col-md-3">
@@ -202,14 +213,19 @@
         </div>
         <!-- ko foreach: ranges -->
         <div class="row">
-          <div class="col-md-offset-3 col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: from" />
+          <!-- ko ifnot: $index -->
+          <div class="col-md-3">
+            <input type="number" class="col-md-12" data-bind="value: $parent.default, valueUpdate: 'afterkeydown'" />
+          </div>
+          <!-- /ko -->
+          <div data-bind="css: $index() && 'col-md-offset-3'" class="col-md-3">
+            <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
           </div>
           <div class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: to" />
+            <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
           </div>
           <div class="col-md-3 price">
-            <input type="number" class="col-md-12" data-bind="value: price" />
+            <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
           </div>
         </div>
         <!-- /ko -->

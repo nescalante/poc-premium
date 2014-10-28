@@ -10,8 +10,11 @@ function Condition(parent) {
   var subscriptions = [];
 
   self.billingMethod = ko.observable();
-  self.signal = ko.observable();
-  self.package = ko.observable();
+  self.invoiceGroup = ko.observable();
+  self.priceMethod = ko.observable();
+  self.serviceType = ko.observable();
+  self.subscribersPackage = ko.observable();
+  self.product = ko.observable();
   self.price = ko.observable();
   self.ranges = ko.observableArray();
 
@@ -27,18 +30,19 @@ function Condition(parent) {
     self.ranges.push(new ConditionRange(self));
     lastRange = self.ranges()[self.ranges().length - 1];
     [
-      lastRange.from,
-      lastRange.to,
-      lastRange.price,
-      lastRange.percentage,
+      'to',
+      'price',
+      'percentage',
     ].map(function (f) {
-      return f.subscribe(addNewRange);
+      return lastRange[f].subscribe(addNewRange.bind(self, f));
     }).forEach(function (s) {
       subscriptions.push(s);
     });
   }
 
-  function addNewRange() {
+  function addNewRange(field) {
+    console.log(field);
+
     subscriptions.forEach(function (s) {
       s.dispose();
     });

@@ -22,8 +22,8 @@ function Month(number, parent) {
     var obj = new Condition(self);
 
     obj.billingMethod(condition.billingMethod);
-    obj.signal(condition.signal);
-    obj.package(condition.package);
+    obj.serviceType(condition.signal);
+    obj.subscribersPackage(condition.package);
     obj.price(condition.price);
 
     (condition.ranges || []).forEach(function (i) {
