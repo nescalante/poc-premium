@@ -12,7 +12,7 @@
   text-align: center;
 }
 
-.month-detail .price input[type=number] {
+.month-detail input[type=number] {
   padding-right: 0;
 }
 
