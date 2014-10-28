@@ -17,9 +17,16 @@ function Condition(parent) {
   self.product = ko.observable();
   self.price = ko.observable();
   self.ranges = ko.observableArray();
+  self.defaultSubscribers = ko.observable();
+
+  self.template = ko.computed(function() {
+    return self.billingMethod() && self.billingMethod().template;
+  });
 
   self.addToMonth = function () {
     parent.conditions.push(self);
+
+    return false;
   };
 
   initializeNewRange();
@@ -34,19 +41,19 @@ function Condition(parent) {
       'price',
       'percentage',
     ].map(function (f) {
-      return lastRange[f].subscribe(addNewRange.bind(self, f));
+      return lastRange[f].subscribe(addNewRange);
     }).forEach(function (s) {
       subscriptions.push(s);
     });
   }
 
-  function addNewRange(field) {
-    console.log(field);
-
-    subscriptions.forEach(function (s) {
-      s.dispose();
-    });
-    subscriptions = [];
-    initializeNewRange();
+  function addNewRange(value) {
+    if (value) {
+      subscriptions.forEach(function (s) {
+        s.dispose();
+      });
+      subscriptions = [];
+      initializeNewRange();
+    }
   }
 }

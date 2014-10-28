@@ -1,63 +1,59 @@
 'use strict';
 
-var types = require('./serviceTypes.js');
-var signal = types.filter(function (t) { return t.name === 'Signal'; })[0];
-var pkg = types.filter(function (t) { return t.name === 'Package'; })[0];
-
 var products = [{
   name: 'Signal Fox HD',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal Fox Life',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal Fox Sports',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal Fox Sports 2',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal Fox Sports 2 HD',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal Fox Sports Premium',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal FX',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal FX HD',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'Signal Mundo Fox',
-  type: signal,
+  type: 'Signal',
 }, {
   name: 'CF+NG',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'CF+NG+FS',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'CF+NG+FX+FS3+FL',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'FS3+NGW',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'FL+NGW+FS3',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'Syfy+UC',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'FSB+FS2',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'CF+NG+FS3',
-  type: pkg,
+  type: 'Package',
 }, {
   name: 'UTILIS+CF+NG+FX+FL',
-  type: pkg,
+  type: 'Package',
 }];
 
 module.exports = products;

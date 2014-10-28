@@ -1,8 +1,8 @@
-.month h4 + a {
+.month h4 + a, .month h4 + .dropdown {
   margin-top: 10px;
 }
 
-.price div:before {
+.price div:before, div.price:before {
   content: '$';
   position: absolute;
   z-index: 1;

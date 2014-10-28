@@ -15,222 +15,129 @@
     <div class="row">
       <div class="col-md-2 month">
         <h4 class="pull-left" data-bind="text: name"></h4>
-        <a class="pull-right btn btn-default btn-sm" data-bind="click: newCondition" data-toggle="modal" data-target="#condition-modal">
-          <span class="glyphicon glyphicon-plus"></span>
-        </a>
+        <div class="dropdown pull-right">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" data-bind="foreach: $root.billingMethods">
+            <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.newCondition.bind($data, $data)"></a></li>
+          </ul>
+        </div>
         <div class="clearfix"></div>
-        <a class="btn btn-default btn-sm">&lt;</a>
-        <a class="btn btn-default btn-sm">&gt;</a>
-        <a class="btn btn-default btn-sm">AVG</a>
+        <a class="btn btn-default btn-sm" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
+        <a class="btn btn-default btn-sm" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
+        <a class="btn btn-default btn-sm" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">AVG</a>
       </div>
       <div class="col-md-10">
-        <div data-bind="template: { name: template, foreach: conditions }"></div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="condition-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="width: 80%">
-      <div class="modal-content" data-bind="with: selectedCondition">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="myModalLabel">New Contract Condition</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <label class="col-sm-2 control-label">Service Details</label>
-              <div class="col-sm-10">
-                <label class="col-sm-2 control-label">Service Type</label>
-                <div class="col-sm-4">
+        <div data-bind="foreach: conditions">
+          <div class="row month-detail" data-bind="css: template">
+            <div class="col-md-2">
+              <h4 data-bind="text: billingMethod().name"></h4>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-6">
                   <select class="form-control" data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
                 </div>
-                <label class="col-sm-2 control-label">Subscribers Package</label>
-                <div class="col-sm-4">
-                  <select class="form-control" data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a subscriber package'"></select>
+                <div class="col-md-6">
+                  <select class="form-control" data-bind="value: product, options: serviceType() && serviceType().products, optionsText: 'name', optionsCaption: 'Select a product'"></select>
                 </div>
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <label class="col-sm-2 control-label">Product</label>
-                <div class="col-sm-4">
-                  <select class="form-control" data-bind="enable: serviceType, value: product, options: $root.productsFor(serviceType), optionsText: 'name', optionsCaption: 'Select a ' + (serviceType() ? 'product' : 'service type first')"></select>
-                </div>
-                <label class="col-sm-2 control-label">Invoice Group</label>
-                <div class="col-sm-4">
+              <div class="row">
+                <div class="col-md-6">
                   <select class="form-control" data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
                 </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <label class="col-sm-2 control-label">Category</label>
-                <div class="col-sm-4">
-                  <input type="text" class="form-control" />
+                <div class="col-md-6">
+                  <select class="form-control" data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
                 </div>
               </div>
-            </div>
-            <hr>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">Billing Details</label>
-              <div class="col-sm-10">
-                <label class="col-sm-2 control-label">Billing Method</label>
-                <div class="col-sm-4">
-                  <select class="form-control" data-bind="value: billingMethod, options: $root.billingMethods, optionsText: 'name', optionsCaption: 'Select a billing method'"></select>
-                </div>
-                <label class="col-sm-2 control-label">Price Method</label>
-                <div class="col-sm-4">
+              <div class="row">
+                <div class="col-md-6">
                   <select class="form-control" data-bind="value: priceMethod, options: $root.priceMethods, optionsText: 'name', optionsCaption: 'Select a price method'"></select>
                 </div>
               </div>
             </div>
-            <hr>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">Discounts Area</label>
-              <div class="col-sm-10">
-                <label class="col-sm-2 control-label">Discounts</label>
-                <div class="col-sm-4">
-                  <input type="text" class="form-control" placeholder="Insert a discount">
+            <div class="col-md-2">
+              <div class="row" data-bind="visible: billingMethod().hasDefault">
+                <div class="col-md-12">
+                  <b>Default</b>
+                  <div>
+                    <input type="number" class="col-md-12" data-bind="value: defaultSubscribers" />
+                  </div>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bind="click: addToMonth" data-dismiss="modal">Create</button>
+            <div class="col-md-4" data-bind="template: template"></div>
+          </div>
+          <div class="row">
+            <button class="btn btn-danger pull-right">Remove</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <script type="text/html" id="flat-fee">
-    <div class="row bg-danger flat-fee month-detail">
-      <div class="col-md-2">
-        <h4 data-bind="text: billingMethod().name"></h4>
-      </div>
-      <div class="col-md-3">
-        <p>
-          <span class="detail-title">Signal</span>
-          <span data-bind="text: serviceType"></span>
-        </p>
-        <p>
-          <span class="detail-title">Package</span>
-          <span data-bind="text: subscribersPackage"></span>
-        </p>
-      </div>
-      <div class="col-md-7">
-        <div class="row">
-          <div class="col-md-offset-9 col-md-3 price">
-            <b>Fee</b>
-            <div>
-              <input type="number" class="col-md-12" data-bind="value: price" />
-            </div>
-          </div>
+    <div class="row">
+      <div class="col-md-offset-8 col-md-4">
+        <b>Fee</b>
+        <div class="price">
+          <input type="number" class="col-md-12" data-bind="value: price" />
         </div>
       </div>
     </div>
   </script>
   <script type="text/html" id="revenue-share">
-    <div class="row bg-success revenue-share month-detail">
-      <div class="col-md-2">
-        <h4 data-bind="text: billingMethod().name"></h4>
+    <div class="row">
+      <div class="col-md-4">
+        <b>From</b>
       </div>
-      <div class="col-md-3">
-        <p>
-          <span class="detail-title">Signal</span>
-          <span data-bind="text: serviceType"></span>
-        </p>
-        <p>
-          <span class="detail-title">Package</span>
-          <span data-bind="text: subscribersPackage"></span>
-        </p>
+      <div class="col-md-4">
+        <b>To</b>
       </div>
-      <div class="col-md-7">
-        <div class="row">
-          <div class="col-md-3">
-            <b>Default</b>
-          </div>
-          <div class="col-md-3">
-            <b>From</b>
-          </div>
-          <div class="col-md-3">
-            <b>To</b>
-          </div>
-          <div class="col-md-3">
-            <b>% Share</b>
-          </div>
-        </div>
-        <!-- ko foreach: ranges -->
-        <div class="row">
-          <!-- ko ifnot: $index -->
-          <div class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: $parent.default, valueUpdate: 'afterkeydown'" />
-          </div>
-          <!-- /ko -->
-          <div data-bind="css: $index() && 'col-md-offset-3'" class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
-          </div>
-          <div class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
-          </div>
-          <div class="col-md-3 price">
-            <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
-          </div>
-        </div>
-        <!-- /ko -->
+      <div class="col-md-4">
+        <b>% Share</b>
       </div>
     </div>
+    <!-- ko foreach: ranges -->
+    <div class="row">
+      <div class="col-md-4">
+        <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
+      </div>
+      <div class="col-md-4">
+        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
+      </div>
+      <div class="col-md-4">
+        <input type="number" class="col-md-12" data-bind="value: percentage, valueUpdate: 'afterkeydown'" />
+      </div>
+    </div>
+    <!-- /ko -->
   </script>
   <script type="text/html" id="actual-subscribers">
-    <div class="row bg-info revenue-share month-detail">
-      <div class="col-md-2">
-        <h4 data-bind="text: billingMethod().name"></h4>
+    <div class="row">
+      <div class="col-md-4">
+        <b>From</b>
       </div>
-      <div class="col-md-3">
-        <p>
-          <span class="detail-title">Signal</span>
-          <span data-bind="text: serviceType"></span>
-        </p>
-        <p>
-          <span class="detail-title">Package</span>
-          <span data-bind="text: subscribersPackage"></span>
-        </p>
+      <div class="col-md-4">
+        <b>To</b>
       </div>
-      <div class="col-md-7">
-        <div class="row">
-          <div class="col-md-3">
-            <b>Default</b>
-          </div>
-          <div class="col-md-3">
-            <b>From</b>
-          </div>
-          <div class="col-md-3">
-            <b>To</b>
-          </div>
-          <div class="col-md-3">
-            <b>Price</b>
-          </div>
-        </div>
-        <!-- ko foreach: ranges -->
-        <div class="row">
-          <!-- ko ifnot: $index -->
-          <div class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: $parent.default, valueUpdate: 'afterkeydown'" />
-          </div>
-          <!-- /ko -->
-          <div data-bind="css: $index() && 'col-md-offset-3'" class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
-          </div>
-          <div class="col-md-3">
-            <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
-          </div>
-          <div class="col-md-3 price">
-            <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
-          </div>
-        </div>
-        <!-- /ko -->
+      <div class="col-md-4">
+        <b>Price</b>
       </div>
     </div>
+    <!-- ko foreach: ranges -->
+    <div class="row">
+      <div class="col-md-4">
+        <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
+      </div>
+      <div class="col-md-4">
+        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
+      </div>
+      <div class="col-md-4 price">
+        <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
+      </div>
+    </div>
+    <!-- /ko -->
   </script>
   <script src="bundle.js"></script>
 </body>

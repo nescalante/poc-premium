@@ -1,14 +1,15 @@
 'use strict';
 
-var methods = [{
-  name: 'Flat Fee',
-  template: 'flat-fee',
-}, {
-  name: 'Revenue Share',
-  template: 'revenue-share',
-}, {
-  name: 'Actual Subscribers',
-  template: 'actual-subscribers',
-}];
+module.exports = {
+  flatFee: getMethod('Flat Fee', 'flat-fee'),
+  revenueShare: getMethod('Revenue Share', 'revenue-share', true),
+  actualSubscribers: getMethod('Actual Subscribers', 'actual-subscribers', true),
+};
 
-module.exports = methods;
+function getMethod(name, template, hasDefault) {
+  return {
+    name: name,
+    template: template,
+    hasDefault: !!hasDefault
+  };
+}

@@ -13,17 +13,21 @@ function Month(number, parent) {
   self.name = months[number - 1];
   self.number = number > 9 ? '' + number : '0' + number;
   self.conditions = ko.observableArray();
+  self.summaryCondition = ko.observable('lower');
 
-  self.newCondition = function() {
-    parent.selectedCondition(new Condition(self));
+  self.newCondition = function(serviceType) {
+    var condition = new Condition(self);
+
+    condition.billingMethod(serviceType);
+    self.conditions.push(condition);
   };
 
   self.addCondition = function(condition) {
     var obj = new Condition(self);
 
     obj.billingMethod(condition.billingMethod);
-    obj.serviceType(condition.signal);
-    obj.subscribersPackage(condition.package);
+    obj.serviceType(condition.serviceType);
+    obj.subscribersPackage(condition.subscribersPackage);
     obj.price(condition.price);
 
     (condition.ranges || []).forEach(function (i) {
@@ -38,9 +42,5 @@ function Month(number, parent) {
     });
 
     self.conditions.push(obj)
-  };
-
-  self.template = function(condition) {
-    return condition.billingMethod().template;
   };
 }
