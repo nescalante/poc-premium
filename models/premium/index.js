@@ -16,6 +16,7 @@ function ContractPremium() {
   self.subscribersPackages = config.subscribersPackages;
   self.months = ko.observableArray();
   self.selectedCondition = ko.observable();
+  self.demoMode = ko.observable();
 
   // initial data
   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (i) {

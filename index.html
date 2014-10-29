@@ -8,10 +8,12 @@
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h4>2014</h4>
-  </div>
-  <div class="container" data-bind="foreach: months">
+  <div class="container" data-bind="css: { 'demo-mode': demoMode }">
+    <div class="row">
+      <h3>2014</h3>
+      <button class="btn btn-primary" data-bind="click: function () { demoMode(!demoMode()); }">Demo mode</button>
+    </div>
+    <!-- ko foreach: months -->
     <div class="row">
       <div class="col-md-2 month">
         <h4 class="pull-left" data-bind="text: name"></h4>
@@ -59,7 +61,7 @@
               </div>
             </div>
             <div class="col-md-2">
-              <div class="row" data-bind="visible: billingMethod().hasDefault">
+              <div class="row">
                 <div class="col-md-12">
                   <b>Default</b>
                   <div>
@@ -67,11 +69,11 @@
                   </div>
                 </div>
               </div>
-              <div class="row" data-bind="visible: billingMethod().hasDefault">
+              <div class="row" data-bind="visible: billingMethod().hasSharePercentage">
                 <div class="col-md-12">
                   <b>% Share</b>
                   <div>
-                    <input type="number" class="col-md-12" data-bind="value: defaultSubscribers" />
+                    <input type="number" class="col-md-12" data-bind="value: sharePercentage" />
                   </div>
                 </div>
               </div>
@@ -79,11 +81,12 @@
             <div class="col-md-3" data-bind="template: template"></div>
           </div>
           <div class="row">
-            <button class="btn btn-danger pull-right">Remove</button>
+            <button class="btn btn-danger pull-right" data-bind="click: remove">Remove</button>
           </div>
         </div>
       </div>
     </div>
+    <!-- /ko -->
   </div>
   <script type="text/html" id="flat-fee">
     <div class="row">
@@ -107,12 +110,12 @@
     <!-- ko foreach: ranges -->
     <div class="row">
       <div class="col-md-5">
-        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
+        <input type="number" class="col-md-12" data-bind="value: to" />
       </div>
       <div class="col-md-6 price">
-        <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
+        <input type="number" class="col-md-12" data-bind="value: price" />
       </div>
-      <button class="btn btn-default col-md-1" style="padding: 0">
+      <button class="btn btn-default col-md-1" style="padding: 0" data-bind="click: remove, visible: $parent.ranges().length > 1">
         x
       </button>
     </div>
@@ -129,12 +132,15 @@
     </div>
     <!-- ko foreach: ranges -->
     <div class="row">
-      <div class="col-md-6">
-        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
+      <div class="col-md-5">
+        <input type="number" class="col-md-12" data-bind="value: to" />
       </div>
       <div class="col-md-6 price">
-        <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
+        <input type="number" class="col-md-12" data-bind="value: price" />
       </div>
+      <button class="btn btn-default col-md-1" style="padding: 0" data-bind="click: remove, visible: $parent.ranges().length > 1">
+        x
+      </button>
     </div>
     <!-- /ko -->
   </script>

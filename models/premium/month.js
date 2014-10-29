@@ -36,7 +36,6 @@ function Month(number, parent) {
       range.from(i.from);
       range.to(i.to);
       range.price(i.price);
-      range.percentage(i.percentage);
 
       obj.ranges.push(range);
     });

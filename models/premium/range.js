@@ -10,7 +10,15 @@ function ConditionRange(parent) {
   self.from = ko.observable();
   self.to = ko.observable();
   self.price = ko.observable();
-  self.percentage = ko.observable();
+
+  self.remove = function () {
+    var isLast = self == parent.ranges()[parent.ranges().length - 1];
+    if (parent.ranges().length > 1 && !isLast) {
+      var result = parent.ranges()
+        .filter(function (r) { return r != self; });
+      parent.ranges(result);
+    }
+  };
 
   self.from.subscribe(function (from) {
     var prev = previousRange();

@@ -18,6 +18,7 @@ function Condition(parent) {
   self.price = ko.observable();
   self.ranges = ko.observableArray();
   self.defaultSubscribers = ko.observable();
+  self.sharePercentage = ko.observable();
 
   self.template = ko.computed(function() {
     return self.billingMethod() && self.billingMethod().template;
@@ -27,6 +28,13 @@ function Condition(parent) {
     parent.conditions.push(self);
 
     return false;
+  };
+
+  self.remove = function () {
+    var result = parent.conditions()
+      .filter(function (c) { return c != self; });
+
+    parent.conditions(result);
   };
 
   initializeNewRange();
@@ -39,7 +47,6 @@ function Condition(parent) {
     [
       'to',
       'price',
-      'percentage',
     ].map(function (f) {
       return lastRange[f].subscribe(addNewRange);
     }).forEach(function (s) {

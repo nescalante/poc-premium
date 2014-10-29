@@ -1,15 +1,15 @@
 'use strict';
 
 module.exports = {
-  flatFee: getMethod('Flat Fee', 'flat-fee'),
-  revenueShare: getMethod('Revenue Share', 'revenue-share', true),
-  actualSubscribers: getMethod('Actual Subscribers', 'actual-subscribers', true),
+  flatFee: createMethod('Flat Fee', 'flat-fee'),
+  revenueShare: createMethod('Revenue Share', 'revenue-share', true),
+  actualSubscribers: createMethod('Actual Subscribers', 'actual-subscribers'),
 };
 
-function getMethod(name, template, hasDefault) {
+function createMethod(name, template, hasSharePercentage) {
   return {
     name: name,
     template: template,
-    hasDefault: !!hasDefault
+    hasSharePercentage: !!hasSharePercentage,
   };
 }
