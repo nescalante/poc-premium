@@ -35,7 +35,7 @@
             <div class="col-md-2">
               <h4 data-bind="text: billingMethod().name"></h4>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
               <div class="row">
                 <div class="col-md-6">
                   <select class="form-control" data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
@@ -67,8 +67,16 @@
                   </div>
                 </div>
               </div>
+              <div class="row" data-bind="visible: billingMethod().hasDefault">
+                <div class="col-md-12">
+                  <b>% Share</b>
+                  <div>
+                    <input type="number" class="col-md-12" data-bind="value: defaultSubscribers" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4" data-bind="template: template"></div>
+            <div class="col-md-3" data-bind="template: template"></div>
           </div>
           <div class="row">
             <button class="btn btn-danger pull-right">Remove</button>
@@ -79,7 +87,7 @@
   </div>
   <script type="text/html" id="flat-fee">
     <div class="row">
-      <div class="col-md-offset-8 col-md-4">
+      <div class="col-md-offset-6 col-md-6">
         <b>Fee</b>
         <div class="price">
           <input type="number" class="col-md-12" data-bind="value: price" />
@@ -89,51 +97,42 @@
   </script>
   <script type="text/html" id="revenue-share">
     <div class="row">
-      <div class="col-md-4">
-        <b>From</b>
+      <div class="col-md-5">
+        <b>Up to</b>
       </div>
-      <div class="col-md-4">
-        <b>To</b>
-      </div>
-      <div class="col-md-4">
-        <b>% Share</b>
-      </div>
-    </div>
-    <!-- ko foreach: ranges -->
-    <div class="row">
-      <div class="col-md-4">
-        <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
-      </div>
-      <div class="col-md-4">
-        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
-      </div>
-      <div class="col-md-4">
-        <input type="number" class="col-md-12" data-bind="value: percentage, valueUpdate: 'afterkeydown'" />
-      </div>
-    </div>
-    <!-- /ko -->
-  </script>
-  <script type="text/html" id="actual-subscribers">
-    <div class="row">
-      <div class="col-md-4">
-        <b>From</b>
-      </div>
-      <div class="col-md-4">
-        <b>To</b>
-      </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <b>Price</b>
       </div>
     </div>
     <!-- ko foreach: ranges -->
     <div class="row">
-      <div class="col-md-4">
-        <input type="number" class="col-md-12" data-bind="value: from, valueUpdate: 'afterkeydown'" />
-      </div>
-      <div class="col-md-4">
+      <div class="col-md-5">
         <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
       </div>
-      <div class="col-md-4 price">
+      <div class="col-md-6 price">
+        <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
+      </div>
+      <button class="btn btn-default col-md-1" style="padding: 0">
+        x
+      </button>
+    </div>
+    <!-- /ko -->
+  </script>
+  <script type="text/html" id="actual-subscribers">
+    <div class="row">
+      <div class="col-md-6">
+        <b>Up to</b>
+      </div>
+      <div class="col-md-6">
+        <b>Price</b>
+      </div>
+    </div>
+    <!-- ko foreach: ranges -->
+    <div class="row">
+      <div class="col-md-6">
+        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown'" />
+      </div>
+      <div class="col-md-6 price">
         <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
       </div>
     </div>
