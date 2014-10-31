@@ -12,11 +12,15 @@
   text-align: center;
 }
 
-.month-detail input[type=number] {
+input[type=number] {
   padding-right: 0;
 }
 
 .month-detail .detail-title {
   font-weight: bold;
   padding-right: 10px;
+}
+
+.month-detail select {
+  height: 26px;
 }

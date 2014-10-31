@@ -1,7 +1,5 @@
-var ko = require('knockout');
-var ContractPremium = require('./models').ContractPremium;
+global.ko = require('knockout');
+global.models = require('./models');
 
-// model definition
-var model = new ContractPremium();
-
-ko.applyBindings(model);
+// extensions
+ko.numericObservable = require('./extensions/numericObservable.js');

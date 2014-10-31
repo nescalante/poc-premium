@@ -1,6 +1,6 @@
 'use strict';
 
-var ko = require('knockout');
+var billingMethods = require('../config').billingMethods;
 var ConditionRange = require('./range.js');
 
 module.exports = Condition;
@@ -15,10 +15,10 @@ function Condition(parent) {
   self.serviceType = ko.observable();
   self.subscribersPackage = ko.observable();
   self.product = ko.observable();
-  self.price = ko.observable();
+  self.price = ko.numericObservable();
   self.ranges = ko.observableArray();
-  self.defaultSubscribers = ko.observable();
-  self.sharePercentage = ko.observable();
+  self.defaultSubscribers = ko.numericObservable();
+  self.sharePercentage = ko.numericObservable();
 
   self.template = ko.computed(function() {
     return self.billingMethod() && self.billingMethod().template;
@@ -32,9 +32,38 @@ function Condition(parent) {
 
   self.remove = function () {
     var result = parent.conditions()
-      .filter(function (c) { return c != self; });
+      .filter(function (c) { return c !== self; });
 
     parent.conditions(result);
+  };
+
+  self.test = function(subscribers) {
+    var billingMethod = self.billingMethod();
+    var range = getRangeFor(subscribers);
+
+    if (billingMethod === billingMethods.flatFee) {
+      return parseFloat(self.price());
+    }
+    else if (billingMethod === billingMethods.revenueShare && range) {
+      if (range) {
+        return range.price() * self.sharePercentage() * subscribers;
+      }
+    }
+    else if (billingMethod === billingMethods.actualSubscribers && range) {
+      return range.price() * subscribers;
+    }
+
+    function getRangeFor(subscribers) {
+      var range;
+
+      self.ranges().forEach(function (r) {
+        if (r.to() >= subscribers && r.isHigherThan(range)) {
+          range = r;
+        }
+      });
+
+      return range;
+    }
   };
 
   initializeNewRange();

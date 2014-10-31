@@ -33,31 +33,19 @@
       </div>
       <div class="col-md-10">
         <div data-bind="foreach: conditions">
+          <h4 data-bind="text: billingMethod().name"></h4>
           <div class="row month-detail" data-bind="css: template">
-            <div class="col-md-2">
-              <h4 data-bind="text: billingMethod().name"></h4>
-            </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <div class="row">
-                <div class="col-md-6">
-                  <select class="form-control" data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
-                </div>
-                <div class="col-md-6">
-                  <select class="form-control" data-bind="value: product, options: serviceType() && serviceType().products, optionsText: 'name', optionsCaption: 'Select a product'"></select>
-                </div>
+                <select class="col-md-6" data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
+                <select class="col-md-6" data-bind="value: product, options: serviceType() && serviceType().products, optionsText: 'name', optionsCaption: 'Select a product'"></select>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                  <select class="form-control" data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
-                </div>
-                <div class="col-md-6">
-                  <select class="form-control" data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
-                </div>
+                <select class="col-md-6" data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
+                <select class="col-md-6" data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                  <select class="form-control" data-bind="value: priceMethod, options: $root.priceMethods, optionsText: 'name', optionsCaption: 'Select a price method'"></select>
-                </div>
+                <select class="col-md-6" data-bind="value: priceMethod, options: $root.priceMethods, optionsText: 'name', optionsCaption: 'Select a price method'"></select>
               </div>
             </div>
             <div class="col-md-2">
@@ -78,14 +66,26 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3" data-bind="template: template"></div>
+            <div class="col-md-4" data-bind="template: template"></div>
           </div>
           <div class="row">
             <button class="btn btn-danger pull-right" data-bind="click: remove">Remove</button>
           </div>
         </div>
+        <div class="row" data-bind="visible: $root.demoMode">
+          <div class="col-md-offset-6 col-md-2">
+            <b>Test Subscribers</b>
+            <div>
+              <input type="number" class="col-md-12" data-bind="value: testSubscribers" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <span class="pull-right" data-bind="text: testResult"></span>
+          </div>
+        </div>
       </div>
     </div>
+    <hr data-bind="visible: !$last()">
     <!-- /ko -->
   </div>
   <script type="text/html" id="flat-fee">
@@ -145,5 +145,11 @@
     <!-- /ko -->
   </script>
   <script src="bundle.js"></script>
+  <script>
+    var ContractPremium = models.ContractPremium;
+    var model = new ContractPremium();
+
+    ko.applyBindings(model);
+  </script>
 </body>
 </html>
