@@ -21,15 +21,16 @@ function Month(number, parent) {
     var results = self.conditions().map(function (c) {
       return c.test(self.testSubscribers());
     });
+    var totals = results.map(function (r) { return r.total; });
 
     if (condition === 'lower') {
-      return results.sort()[0];
+      return totals.sort()[0];
     }
     else if (condition === 'higher') {
-      return results.sort()[results.length - 1];
+      return totals.sort()[totals.length - 1];
     }
     else if (condition === 'average') {
-      return results.reduce(function (a, b) { return a + b; }, 0) / results.length;
+      return totals.reduce(function (a, b) { return a + b; }, 0) / totals.length;
     }
   });
 

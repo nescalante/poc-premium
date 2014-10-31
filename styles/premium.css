@@ -24,3 +24,7 @@ input[type=number] {
 .month-detail select {
   height: 26px;
 }
+
+.demo-mode .current-range input {
+  border: 1px solid blue;
+}

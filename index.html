@@ -108,7 +108,7 @@
       </div>
     </div>
     <!-- ko foreach: ranges -->
-    <div class="row">
+    <div class="row" data-bind="css: { 'current-range': $parent.currentRange() === $data }">
       <div class="col-md-5">
         <input type="number" class="col-md-12" data-bind="value: to" />
       </div>
@@ -131,7 +131,7 @@
       </div>
     </div>
     <!-- ko foreach: ranges -->
-    <div class="row">
+    <div class="row" data-bind="css: { 'current-range': $parent.currentRange() === $data }">
       <div class="col-md-5">
         <input type="number" class="col-md-12" data-bind="value: to" />
       </div>

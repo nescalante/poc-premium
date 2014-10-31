@@ -24,6 +24,10 @@ function Condition(parent) {
     return self.billingMethod() && self.billingMethod().template;
   });
 
+  self.currentRange = ko.computed(function () {
+    return getRangeFor(parent.testSubscribers());
+  });
+
   self.addToMonth = function () {
     parent.conditions.push(self);
 
@@ -40,30 +44,22 @@ function Condition(parent) {
   self.test = function(subscribers) {
     var billingMethod = self.billingMethod();
     var range = getRangeFor(subscribers);
+    var total;
 
     if (billingMethod === billingMethods.flatFee) {
-      return parseFloat(self.price());
+      total = self.price();
     }
     else if (billingMethod === billingMethods.revenueShare && range) {
-      if (range) {
-        return range.price() * self.sharePercentage() * subscribers;
-      }
+      total = range.price() * self.sharePercentage() * subscribers;
     }
     else if (billingMethod === billingMethods.actualSubscribers && range) {
-      return range.price() * subscribers;
+      total = range.price() * subscribers;
     }
 
-    function getRangeFor(subscribers) {
-      var range;
-
-      self.ranges().forEach(function (r) {
-        if (r.to() >= subscribers && r.isHigherThan(range)) {
-          range = r;
-        }
-      });
-
-      return range;
-    }
+    return {
+      total: total,
+      range: range,
+    };
   };
 
   initializeNewRange();
@@ -81,6 +77,18 @@ function Condition(parent) {
     }).forEach(function (s) {
       subscriptions.push(s);
     });
+  }
+
+  function getRangeFor(subscribers) {
+    var range;
+
+    self.ranges().forEach(function (r) {
+      if (r.to() >= subscribers && r.isHigherThan(range)) {
+        range = r;
+      }
+    });
+
+    return range;
   }
 
   function addNewRange(value) {
