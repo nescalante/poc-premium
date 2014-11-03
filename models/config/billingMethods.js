@@ -6,10 +6,10 @@ module.exports = {
   actualSubscribers: createMethod('Actual Subscribers', 'actual-subscribers'),
 };
 
-function createMethod(name, template, hasSharePercentage) {
+function createMethod(name, template, isRevenueShare) {
   return {
     name: name,
     template: template,
-    hasSharePercentage: !!hasSharePercentage,
+    isRevenueShare: !!isRevenueShare,
   };
 }

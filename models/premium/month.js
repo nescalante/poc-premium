@@ -15,19 +15,20 @@ function Month(number, parent) {
   self.conditions = ko.observableArray();
   self.summaryCondition = ko.observable('lower');
   self.testSubscribers = ko.numericObservable();
+  self.testRetailPrice = ko.numericObservable();
 
   self.testResult = ko.computed(function () {
     var condition = self.summaryCondition();
     var results = self.conditions().map(function (c) {
-      return c.test(self.testSubscribers());
+      return c.test(self.testSubscribers(), self.testRetailPrice());
     });
     var totals = results.map(function (r) { return r.total; });
 
     if (condition === 'lower') {
-      return totals.sort()[0];
+      return totals.sort(function (a, b) { return a - b; })[0];
     }
     else if (condition === 'higher') {
-      return totals.sort()[totals.length - 1];
+      return totals.sort(function (a, b) { return a - b; })[totals.length - 1];
     }
     else if (condition === 'average') {
       return totals.reduce(function (a, b) { return a + b; }, 0) / totals.length;
@@ -39,16 +40,14 @@ function Month(number, parent) {
   });
 
   self.newCondition = function(serviceType) {
-    var condition = new Condition(self);
+    var condition = new Condition(serviceType, self);
 
-    condition.billingMethod(serviceType);
     self.conditions.push(condition);
   };
 
   self.addCondition = function(condition) {
-    var obj = new Condition(self);
+    var obj = new Condition(condition.billingMethod, self);
 
-    obj.billingMethod(condition.billingMethod);
     obj.serviceType(condition.serviceType);
     obj.subscribersPackage(condition.subscribersPackage);
     obj.price(condition.price);
@@ -58,8 +57,10 @@ function Month(number, parent) {
 
       range.to(i.to);
       range.price(i.price);
+      range.percentage(i.percentage);
 
       obj.ranges.push(range);
+      obj.sort();
     });
 
     self.conditions.push(obj);

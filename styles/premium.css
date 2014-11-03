@@ -1,4 +1,4 @@
-.month h4 + a, .month h4 + .dropdown {
+.month-info h4 + a, .month-info h4 + .dropdown {
   margin-top: 10px;
 }
 
@@ -10,6 +10,7 @@
   line-height: 26px;
   width: 16px;
   text-align: center;
+  margin-top: 5px;
 }
 
 input[type=number] {
@@ -27,4 +28,171 @@ input[type=number] {
 
 .demo-mode .current-range input {
   border: 1px solid blue;
+}
+
+.condition {
+  border: 1px solid black;
+  margin-right: -5px;
+  margin-left: -15px;
+  padding: 0 15px 15px;
+}
+
+.month-buttons a.side-button {
+  float: right;
+  display: block;
+  border-radius: 20px;
+  border: 1px solid black;
+  font-weight: bold;
+  font-size: 14px;
+  clear: both;
+  margin-bottom: 5px;
+}
+
+.month-buttons a.side-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.month-buttons a.side-button:hover {
+  background-color: #ddc;
+  color: #333;
+}
+
+.month-buttons a.side-button.active {
+  background-color: #f5e8c9;
+  color: #333;
+}
+
+.month-buttons a.side-button.side-main {
+  background-color: #333;
+  color: #aaa;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.month-buttons a.side-button.side-main:hover {
+  background-color: #999;
+  color: #eee;
+}
+
+.month-buttons a.side-button.side-main.active {
+  background-color: #aaa;
+  color: #eee;
+}
+
+.month-buttons {
+  float: right;
+  width: 34px;
+}
+
+.a-line {
+  height: 100%;
+  position: fixed;
+  border-left: 2px solid black;
+  z-index: -1;
+  left: 50%;
+}
+
+.month .container {
+  position: absolute;
+  height: 100%;
+}
+
+.month:nth-child(even) {
+  background-color: #eee;
+};
+
+select:disabled, select[disabled], select[disabled=""] {
+  border-color: #ccc;
+  color: #ccc;
+}
+
+.condition select, .condition input {
+  width: 100%;
+  margin: 5px 0;
+  padding-left: 15px;
+}
+
+.condition {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.condition b.first-title {
+  position: absolute;
+  top: -20px;
+}
+
+.flat-fee {
+  background-color: #f2dcd1;
+  border-color: #ecc;
+}
+
+.revenue-share {
+  background-color: #e0e3f4;
+  border-color: #dde;
+}
+
+.actual-subscribers {
+  background-color: #e0f2da;
+  border-color: #dec;
+}
+
+.month-buttons .dropdown-menu {
+  left: 40px;
+  background-color: #333;
+  color: #eee;
+  border-radius: 0;
+}
+
+.month-buttons .dropdown-menu > li > a {
+  background-color: #333;
+  color: #eee;
+  cursor: pointer;
+}
+
+.month-buttons .dropdown-menu > li > a:hover {
+  background-color: #999;
+  color: #eee;
+}
+
+.btn.btn-remove-range {
+  margin-top: 6px;
+  padding: 0 6px;
+  background-color: #333;
+  color: #ddd;
+  border-radius: 30px;
+}
+
+.btn.btn-remove {
+  margin-top: 10px;
+}
+
+
+.btn.btn-remove:hover {
+  background-color: #aaa;
+  color: #333;
+}
+
+.test-subscribers {
+  margin-bottom: 10px;
+}
+
+.test-subscribers .price:before {
+  margin-top: 0;
+}
+
+.test-total {
+  float: right;
+}
+
+.test-total span {
+  display: block;
+  text-align: right;
+}
+
+.btn.btn-demo {
+  float: right;
+  margin-top: 20px;
+  margin-bottom: 5px;
 }

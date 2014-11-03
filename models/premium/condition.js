@@ -1,15 +1,16 @@
 'use strict';
 
 var billingMethods = require('../config').billingMethods;
+var priceMethods = require('../config').priceMethods;
 var ConditionRange = require('./range.js');
 
 module.exports = Condition;
 
-function Condition(parent) {
+function Condition(billingMethod, parent) {
   var self = this;
   var subscriptions = [];
 
-  self.billingMethod = ko.observable();
+  self.billingMethod = billingMethod;
   self.invoiceGroup = ko.observable();
   self.priceMethod = ko.observable();
   self.serviceType = ko.observable();
@@ -19,10 +20,6 @@ function Condition(parent) {
   self.ranges = ko.observableArray();
   self.defaultSubscribers = ko.numericObservable();
   self.sharePercentage = ko.numericObservable();
-
-  self.template = ko.computed(function() {
-    return self.billingMethod() && self.billingMethod().template;
-  });
 
   self.currentRange = ko.computed(function () {
     return getRangeFor(parent.testSubscribers());
@@ -34,6 +31,15 @@ function Condition(parent) {
     return false;
   };
 
+  self.sort = function () {
+    var result = self.ranges()
+      .sort(function (a, b) {
+        return a.to() > b.to() || !b.to();
+      });
+
+    self.ranges(result);
+  };
+
   self.remove = function () {
     var result = parent.conditions()
       .filter(function (c) { return c !== self; });
@@ -41,19 +47,45 @@ function Condition(parent) {
     parent.conditions(result);
   };
 
-  self.test = function(subscribers) {
-    var billingMethod = self.billingMethod();
+  self.test = function(subscribers, retailPrice) {
     var range = getRangeFor(subscribers);
-    var total;
+    var remaining = subscribers;
+    var total = 0;
+    var last;
 
     if (billingMethod === billingMethods.flatFee) {
       total = self.price();
     }
     else if (billingMethod === billingMethods.revenueShare && range) {
-      total = range.price() * self.sharePercentage() * subscribers;
+      total = retailPrice * (range.percentage() / 100) * subscribers;
     }
     else if (billingMethod === billingMethods.actualSubscribers && range) {
-      total = range.price() * subscribers;
+      if (self.priceMethod() === priceMethods.range) {
+        total = range.price() * subscribers;
+      }
+      else if (self.priceMethod() == priceMethods.incremental) {
+        self.ranges().forEach(function (r) {
+          if (remaining) {
+            if (r.to()) {
+              remaining -= r.to() - ((last && last.to()) || 0);
+
+              if (remaining > 0) {
+                total += r.to() * r.price();
+              }
+              else {
+                total += (r.to() + remaining) * r.price();
+                remaining = 0;
+              }
+            }
+            else {
+              total += remaining * r.price();
+              remaining = 0;
+            }
+          }
+
+          last = r;
+        });
+      }
     }
 
     return {
@@ -71,7 +103,6 @@ function Condition(parent) {
     lastRange = self.ranges()[self.ranges().length - 1];
     [
       'to',
-      'price',
     ].map(function (f) {
       return lastRange[f].subscribe(addNewRange);
     }).forEach(function (s) {
@@ -83,12 +114,16 @@ function Condition(parent) {
     var range;
 
     self.ranges().forEach(function (r) {
-      if (r.to() >= subscribers && r.isHigherThan(range)) {
+      var isInfinity = r.price() && !r.to();
+      var isOnRange = r.to() >= subscribers;
+
+      if (isInfinity || (isOnRange && r.isHigherThan(range))) {
         range = r;
       }
     });
 
     return range;
+
   }
 
   function addNewRange(value) {

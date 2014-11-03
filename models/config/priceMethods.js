@@ -1,11 +1,15 @@
 'use strict';
 
-var groups = [{
-  name: 'Fixed',
-}, {
-  name: 'Range',
-}, {
-  name: 'Incremental',
-}];
+var range = createMethod('Range');
+var incremental = createMethod('Incremental');
 
-module.exports = groups;
+module.exports = {
+  range: range,
+  incremental: incremental,
+};
+
+function createMethod(name) {
+  return {
+    name: name,
+  };
+}

@@ -17,5 +17,8 @@
     "jshint": "^2.5.6",
     "jshint-stylish": "^1.0.0",
     "watchify": "^2.0.0"
+  },
+  "dependencies": {
+    "knockout": "^3.2.0"
   }
 }
