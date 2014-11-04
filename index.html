@@ -95,18 +95,18 @@
           <div class="col-md-2">
             <div class="test-total">
               <b>Total</b>
-              <span data-bind="text: testResult"></span>
+              <span data-bind="text: '$ ' + testResult()"></span>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- /ko -->
-    <div class="row">
-      <div class="col-md-offset-11 col-md-1">
+    <div class="row" data-bind="visible: demoMode">
+      <div class="col-md-offset-9 col-md-3">
         <div class="test-total">
-          <b>Total</b>
-          <span data-bind="text: testResult"></span>
+          <b>Total for 2014</b>
+          <span data-bind="text: '$ ' + testResult()"></span>
         </div>
       </div>
     </div>
