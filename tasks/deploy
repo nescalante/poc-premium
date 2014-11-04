@@ -2,3 +2,5 @@
 
 npm test
 browserify main.js -d -o bundle.js
+cp -r bower_components/jquery/dist components/jquery
+cp -r bower_components/bootstrap/dist components/bootstrap

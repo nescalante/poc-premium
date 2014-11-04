@@ -93,7 +93,7 @@ function Month(number, parent) {
     var data = month.getMonthData();
 
     self.initialize(data);
-  }
+  };
 
   self.getMonthData = function () {
     return {
