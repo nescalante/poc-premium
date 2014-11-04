@@ -17,6 +17,7 @@
   "latedef": "nofunc",
   "quotmark": "single",
   "indent": 2,
+  "evil": true,
   "node": true,
-  "predef": ["ko"]
+  "predef": ["ko", "window"]
 }

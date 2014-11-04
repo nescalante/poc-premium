@@ -23,8 +23,8 @@ function ContractPremium() {
     return new Month(i, self);
   }).forEach(addMonth);
 
-  if (window.localStorage && window.localStorage.data) {
-    json = eval("(" + window.localStorage.data + ")");
+  if (global.localStorage && global.localStorage.data) {
+    json = eval('(' + global.localStorage.data + ')');
 
     json.months.forEach(function (m) {
       var month = self.months()[m.number - 1];
@@ -77,13 +77,17 @@ function ContractPremium() {
       })
     });
 
-    window.localStorage['data'] = data;
-    setInterval(save, 1500);
-  };
+    global.localStorage['data'] = data;
+  }
 
   function addMonth(month) {
     self.months.push(month);
   }
 
-  setInterval(save, 3000);
+  (function saveForever() {
+    setInterval(function () {
+      save();
+      saveForever();
+    }, 2000);
+  })();
 }
