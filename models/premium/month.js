@@ -2,6 +2,7 @@
 
 var Condition = require('./condition.js');
 var ConditionRange = require('./range.js');
+var config = require('../config');
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 module.exports = Month;
@@ -10,6 +11,7 @@ function Month(number, parent) {
   var self = this;
   var testSubscribers = 0;
   var testRetailPrice = 0;
+  var get = config.getByName;
 
   self.name = months[number - 1];
   self.number = number > 9 ? '' + number : '0' + number;
@@ -71,14 +73,15 @@ function Month(number, parent) {
   };
 
   self.addCondition = function(condition) {
-    var obj = new Condition(condition.billingMethod, self, (condition.ranges && condition.ranges.length));
+    var billingMethod = get(config.billingMethods, condition.billingMethod);
+    var obj = new Condition(billingMethod, self, (condition.ranges && condition.ranges.length));
 
-    obj.serviceType(condition.serviceType);
-    obj.subscribersPackage(condition.subscribersPackage);
+    obj.serviceType(get(config.serviceTypes, condition.serviceType));
+    obj.subscribersPackage(get(config.subscribersPackages, condition.subscribersPackage));
     obj.price(condition.price);
-    obj.priceMethod(condition.priceMethod);
-    obj.invoiceGroup(condition.invoiceGroup);
-    obj.product(condition.product);
+    obj.priceMethod(get(config.priceMethods, condition.priceMethod));
+    obj.invoiceGroup(get(config.invoiceGroups, condition.invoiceGroup));
+    obj.product(get(config.products, condition.product));
     obj.defaultSubscribers(condition.defaultSubscribers);
 
     (condition.ranges || []).forEach(obj.addRange);

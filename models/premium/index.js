@@ -7,6 +7,7 @@ module.exports = ContractPremium;
 
 function ContractPremium() {
   var self = this;
+  var json;
 
   self.billingMethods = [config.billingMethods.flatFee, config.billingMethods.revenueShare, config.billingMethods.actualSubscribers];
   self.priceMethods = [config.priceMethods.range, config.priceMethods.incremental];
@@ -22,20 +23,19 @@ function ContractPremium() {
     return new Month(i, self);
   }).forEach(addMonth);
 
-  self.months()[0].addCondition({
-    billingMethod: config.billingMethods.actualSubscribers,
-    serviceType: 'HD Basic',
-    subscribersPackage: 'Premium Fox Sports',
-    ranges: [{
-      to: 100,
-      price: 1,
-    }, {
-      to: 200,
-      price: 2,
-    }, {
-      price: 3,
-    }],
-  });
+  if (window.localStorage && window.localStorage.data) {
+    json = eval("(" + window.localStorage.data + ")");
+
+    json.months.forEach(function (m) {
+      var month = self.months()[m.number - 1];
+
+      month.summaryCondition(m.summaryCondition);
+      month.testSubscribers(m.testSubscribers);
+      month.testRetailPrice(m.testRetailPrice);
+
+      m.conditions.forEach(month.addCondition);
+    });
+  }
 
   self.testResult = ko.computed(function () {
     return self.months().map(function (m) {
@@ -45,7 +45,45 @@ function ContractPremium() {
     }, 0);
   });
 
+  function save() {
+    var data = JSON.stringify({
+      months: self.months().map(function (m) {
+        return {
+          conditions: m.conditions().map(function (c) {
+            return {
+              billingMethod: c.billingMethod.name,
+              invoiceGroup: c.invoiceGroup() && c.invoiceGroup().name,
+              priceMethod: c.priceMethod() && c.priceMethod().name,
+              serviceType: c.serviceType() && c.serviceType().name,
+              subscribersPackage: c.subscribersPackage() && c.subscribersPackage().name,
+              product: c.product() && c.product().name,
+              price: c.price(),
+              defaultSubscribers: c.defaultSubscribers(),
+              ranges: c.ranges().map(function (r) {
+                return {
+                  to: r.to(),
+                  price: r.price(),
+                  percentage: r.percentage(),
+                };
+              })
+            };
+          }),
+          number: parseInt(m.number, 10),
+          name: m.name,
+          summaryCondition: m.summaryCondition(),
+          testSubscribers: m.testSubscribers(),
+          testRetailPrice: m.testRetailPrice(),
+        };
+      })
+    });
+
+    window.localStorage['data'] = data;
+    setInterval(save, 1500);
+  };
+
   function addMonth(month) {
     self.months.push(month);
   }
+
+  setInterval(save, 3000);
 }

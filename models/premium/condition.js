@@ -146,13 +146,18 @@ function Condition(billingMethod, parent, preventRangeInit) {
     var range;
 
     self.ranges().forEach(function (r) {
-      var isInfinity = (r.price() || r.percentage()) && !r.to();
       var isOnRange = r.to() >= subscribers;
 
-      if (isInfinity || (isOnRange && r.isHigherThan(range))) {
+      if (isOnRange && r.isHigherThan(range)) {
         range = r;
       }
     });
+
+    if (!range) {
+      range = self.ranges().filter(function (r) {
+        return (r.price() || r.percentage()) && !r.to();
+      })[0];
+    }
 
     return range;
   }

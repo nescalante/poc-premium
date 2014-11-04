@@ -11,7 +11,7 @@
 
 .month:nth-child(even) h5 {
   background-color: #f3f3f3;
-};
+}
 
 .price div:before, div.price:before {
   content: '$';
