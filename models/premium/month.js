@@ -88,4 +88,48 @@ function Month(number, parent) {
 
     self.conditions.push(obj);
   };
+
+  self.copyFrom = function (month) {
+    var data = month.getMonthData();
+
+    self.initialize(data);
+  }
+
+  self.getMonthData = function () {
+    return {
+      conditions: self.conditions().map(function (c) {
+        return {
+          billingMethod: c.billingMethod.name,
+          invoiceGroup: c.invoiceGroup() && c.invoiceGroup().name,
+          priceMethod: c.priceMethod() && c.priceMethod().name,
+          serviceType: c.serviceType() && c.serviceType().name,
+          subscribersPackage: c.subscribersPackage() && c.subscribersPackage().name,
+          product: c.product() && c.product().name,
+          price: c.price(),
+          defaultSubscribers: c.defaultSubscribers(),
+          ranges: c.ranges().map(function (r) {
+            return {
+              to: r.to(),
+              price: r.price(),
+              percentage: r.percentage(),
+            };
+          })
+        };
+      }),
+      number: parseInt(self.number, 10),
+      name: self.name,
+      summaryCondition: self.summaryCondition(),
+      testSubscribers: self.testSubscribers(),
+      testRetailPrice: self.testRetailPrice(),
+    };
+  };
+
+  self.initialize = function (data) {
+    self.summaryCondition(data.summaryCondition);
+    self.testSubscribers(data.testSubscribers);
+    self.testRetailPrice(data.testRetailPrice);
+    self.conditions([]);
+
+    (data.conditions || []).forEach(self.addCondition);
+  };
 }

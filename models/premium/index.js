@@ -24,16 +24,15 @@ function ContractPremium() {
   }).forEach(addMonth);
 
   if (global.localStorage && global.localStorage.data) {
+    // its evalution baby!
     json = eval('(' + global.localStorage.data + ')');
 
     json.months.forEach(function (m) {
       var month = self.months()[m.number - 1];
 
-      month.summaryCondition(m.summaryCondition);
-      month.testSubscribers(m.testSubscribers);
-      month.testRetailPrice(m.testRetailPrice);
-
-      m.conditions.forEach(month.addCondition);
+      if (month) {
+        month.initialize(m);
+      }
     });
   }
 
@@ -48,37 +47,14 @@ function ContractPremium() {
   function save() {
     var data = JSON.stringify({
       months: self.months().map(function (m) {
-        return {
-          conditions: m.conditions().map(function (c) {
-            return {
-              billingMethod: c.billingMethod.name,
-              invoiceGroup: c.invoiceGroup() && c.invoiceGroup().name,
-              priceMethod: c.priceMethod() && c.priceMethod().name,
-              serviceType: c.serviceType() && c.serviceType().name,
-              subscribersPackage: c.subscribersPackage() && c.subscribersPackage().name,
-              product: c.product() && c.product().name,
-              price: c.price(),
-              defaultSubscribers: c.defaultSubscribers(),
-              ranges: c.ranges().map(function (r) {
-                return {
-                  to: r.to(),
-                  price: r.price(),
-                  percentage: r.percentage(),
-                };
-              })
-            };
-          }),
-          number: parseInt(m.number, 10),
-          name: m.name,
-          summaryCondition: m.summaryCondition(),
-          testSubscribers: m.testSubscribers(),
-          testRetailPrice: m.testRetailPrice(),
-        };
+        return m.getMonthData();
       })
     });
 
     global.localStorage['data'] = data;
   }
+
+  global.onbeforeunload = save;
 
   function addMonth(month) {
     self.months.push(month);
@@ -88,6 +64,6 @@ function ContractPremium() {
     setInterval(function () {
       save();
       saveForever();
-    }, 2000);
+    }, 3000);
   })();
 }

@@ -74,19 +74,27 @@ input[type=number] {
   color: #333;
 }
 
-.month-buttons a.side-button.side-main {
+.month-buttons a.side-button.side-main, .month-buttons a.side-button.side-copy {
   background-color: #333;
   color: #aaa;
   margin-top: 5px;
   margin-bottom: 20px;
 }
 
-.month-buttons a.side-button.side-main:hover {
+.month-buttons a.side-button.side-copy {
+  margin-top: -15px;
+}
+
+.month-buttons a.side-button.side-copy + ul {
+  top: 40px;
+}
+
+.month-buttons a.side-button.side-main:hover, .month-buttons a.side-button.side-copy:hover {
   background-color: #999;
   color: #eee;
 }
 
-.month-buttons a.side-button.side-main.active {
+.month-buttons a.side-button.side-main.active, .month-buttons a.side-button.side-copy.active {
   background-color: #aaa;
   color: #eee;
 }

@@ -26,6 +26,16 @@
               <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.newCondition.bind($data, $data)"></a></li>
             </ul>
           </div>
+          <!-- ko if: !conditions().length -->
+          <div class="dropdown">
+            <a class="btn side-button side-copy dropdown-toggle" type="button" data-toggle="dropdown">
+              C
+            </a>
+            <ul class="dropdown-menu" role="menu" data-bind="foreach: $root.months().filter(function (m) { return m.conditions().length; })">
+              <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: 'Copy from ' + name, click: $parent.copyFrom.bind($data, $data)"></a></li>
+            </ul>
+          </div>
+          <!-- /ko -->
           <!-- ko if: conditions().length > 1 -->
           <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
           <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
@@ -83,13 +93,13 @@
           <div class="col-md-offset-6 col-md-2">
             <b>Test Subscribers</b>
             <div>
-              <input type="number" class="col-md-12" data-bind="value: testSubscribers, valueUpdate: 'afterkeydown'" />
+              <input type="number" class="col-md-12" data-bind="value: testSubscribers" />
             </div>
           </div>
           <div class="col-md-2">
             <b>Retail Price</b>
             <div class="price">
-              <input type="number" class="col-md-12" data-bind="value: testRetailPrice, valueUpdate: 'afterkeydown'" />
+              <input type="number" class="col-md-12" data-bind="value: testRetailPrice" />
             </div>
           </div>
           <div class="col-md-2">
@@ -116,7 +126,7 @@
       <div class="col-md-offset-5 col-md-6">
         <b class="first-title">Fee</b>
         <div class="price">
-          <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
+          <input type="number" class="col-md-12" data-bind="value: price" />
         </div>
       </div>
     </div>
@@ -136,7 +146,7 @@
         <input type="number" class="col-md-12" data-bind="value: to, event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
       </div>
       <div class="col-md-6">
-        <input type="number" class="col-md-12" data-bind="value: percentage, valueUpdate: 'afterkeydown'" />
+        <input type="number" class="col-md-12" data-bind="value: percentage" />
       </div>
       <button class="btn btn-remove-range" data-bind="click: remove, visible: $parent.ranges().length > 1 && !$last()">
         &times;
@@ -159,7 +169,7 @@
         <input type="number" class="col-md-12" data-bind="value: to, event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
       </div>
       <div class="col-md-6 price">
-        <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />
+        <input type="number" class="col-md-12" data-bind="value: price" />
       </div>
       <button class="btn btn-remove-range" data-bind="click: remove, visible: $parent.ranges().length > 1">
         &times;
