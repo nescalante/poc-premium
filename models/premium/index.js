@@ -45,8 +45,6 @@ function ContractPremium() {
     }, 0);
   });
 
-  self.demoMode(true);
-
   function addMonth(month) {
     self.months.push(month);
   }

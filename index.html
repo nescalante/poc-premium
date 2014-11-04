@@ -11,7 +11,7 @@
   <div class="container" data-bind="css: { 'demo-mode': demoMode }">
     <div class="row">
       <h3 class="pull-left">2014</h3>
-      <button class="btn btn-primary btn-demo" data-bind="click: function () { demoMode(!demoMode()); }">Demo mode</button>
+      <button class="btn btn-primary btn-demo" data-bind="css: { active: demoMode }, click: function () { demoMode(!demoMode()); }">Demo mode</button>
     </div>
     <!-- ko foreach: months -->
     <div class="row month">
@@ -75,6 +75,9 @@
             </div>
             <button class="btn btn-danger btn-remove" data-bind="click: remove">Remove</button>
           </div>
+        </div>
+        <div data-bind="visible: !conditions().length">
+          <h5>To get started, add some condition with the "+" button</h5>
         </div>
         <div class="row test-subscribers" data-bind="visible: $root.demoMode() && conditions().length">
           <div class="col-md-offset-6 col-md-2">
