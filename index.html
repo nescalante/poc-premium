@@ -55,7 +55,7 @@
                     <select class="col-md-6" data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
                   </div>
                 </div>
-                <div class="row" data-bind="visible: !billingMethod.isRevenueShare">
+                <div class="row" data-bind="visible: billingMethod.isActualSubscribers">
                   <div class="col-md-6">
                     <select class="col-md-6" data-bind="value: priceMethod, options: $root.priceMethods, optionsText: 'name', optionsCaption: 'Select a price method'"></select>
                   </div>
@@ -99,6 +99,14 @@
       </div>
     </div>
     <!-- /ko -->
+    <div class="row">
+      <div class="col-md-offset-11 col-md-1">
+        <div class="test-total">
+          <b>Total</b>
+          <span data-bind="text: testResult"></span>
+        </div>
+      </div>
+    </div>
   </div>
   <script type="text/html" id="flat-fee">
     <div class="row">
@@ -122,7 +130,7 @@
     <!-- ko foreach: ranges -->
     <div class="row" data-bind="css: { 'current-range': $parent.currentRange() === $data }">
       <div class="col-md-5">
-        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown', event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
+        <input type="number" class="col-md-12" data-bind="value: to, event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
       </div>
       <div class="col-md-6">
         <input type="number" class="col-md-12" data-bind="value: percentage, valueUpdate: 'afterkeydown'" />
@@ -145,7 +153,7 @@
     <!-- ko foreach: ranges -->
     <div class="row" data-bind="css: { 'current-range': $parent.currentRange() === $data }">
       <div class="col-md-5">
-        <input type="number" class="col-md-12" data-bind="value: to, valueUpdate: 'afterkeydown', event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
+        <input type="number" class="col-md-12" data-bind="value: to, event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
       </div>
       <div class="col-md-6 price">
         <input type="number" class="col-md-12" data-bind="value: price, valueUpdate: 'afterkeydown'" />

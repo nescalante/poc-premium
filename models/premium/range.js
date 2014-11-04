@@ -11,7 +11,9 @@ function ConditionRange(parent) {
 
   self.remove = function () {
     var isLast = self === parent.ranges()[parent.ranges().length - 1];
-    if (parent.ranges().length > 1 && !isLast) {
+    var isAnotherInfinity = parent.ranges().filter(function (r) { return r !== self && !r.to(); }).length;
+
+    if ((parent.ranges().length > 1 && !isLast) || isAnotherInfinity) {
       var result = parent.ranges()
         .filter(function (r) { return r !== self; });
       parent.ranges(result);
@@ -24,8 +26,11 @@ function ConditionRange(parent) {
 
   [self.to, self.price, self.percentage].forEach(function (f) {
     f.subscribe(function (v) {
-      if (!self.to() && !self.price()) {
+      if (!self.to() && !self.price() && !self.percentage()) {
         self.remove();
+      }
+      if (!self.to() && !self.$last()) {
+        parent.ranges()[parent.ranges().length - 1].remove();
       }
     });
   });

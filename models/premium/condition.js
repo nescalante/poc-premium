@@ -6,9 +6,10 @@ var ConditionRange = require('./range.js');
 
 module.exports = Condition;
 
-function Condition(billingMethod, parent) {
+function Condition(billingMethod, parent, preventRangeInit) {
   var self = this;
   var subscriptions = [];
+  var isSorting;
 
   self.billingMethod = billingMethod;
   self.invoiceGroup = ko.observable();
@@ -19,7 +20,6 @@ function Condition(billingMethod, parent) {
   self.price = ko.numericObservable();
   self.ranges = ko.observableArray();
   self.defaultSubscribers = ko.numericObservable();
-  self.sharePercentage = ko.numericObservable();
 
   self.currentRange = ko.computed(function () {
     return getRangeFor(parent.testSubscribers());
@@ -31,13 +31,32 @@ function Condition(billingMethod, parent) {
     return false;
   };
 
+  self.ranges.subscribe(function () {
+    var lastRange = self.ranges()[self.ranges().length - 1];
+    disposeSubscriptions();
+    subscribeRange(lastRange);
+    if (!isSorting) {
+      isSorting = true;
+      self.sort();
+    }
+  });
+
   self.sort = function () {
     var result = self.ranges()
       .sort(function (a, b) {
-        return a.to() > b.to() || !b.to();
+        if (!b.to()) {
+          return -1;
+        }
+        else if (!a.to()) {
+          return 1;
+        }
+        else {
+          return a.to() - b.to();
+        }
       });
 
     self.ranges(result);
+    isSorting = false;
   };
 
   self.remove = function () {
@@ -64,13 +83,16 @@ function Condition(billingMethod, parent) {
         total = range.price() * subscribers;
       }
       else if (self.priceMethod() == priceMethods.incremental) {
+
         self.ranges().forEach(function (r) {
-          if (remaining) {
+          var lastTo = last ? last.to() : 0;
+
+          if (remaining && r.price()) {
             if (r.to()) {
-              remaining -= r.to() - ((last && last.to()) || 0);
+              remaining -= r.to() - lastTo;
 
               if (remaining > 0) {
-                total += r.to() * r.price();
+                total += (r.to() - lastTo) * r.price();
               }
               else {
                 total += (r.to() + remaining) * r.price();
@@ -94,17 +116,27 @@ function Condition(billingMethod, parent) {
     };
   };
 
-  initializeNewRange();
+  self.addRange = function (i) {
+    var range = new ConditionRange(self);
+
+    range.to(i.to);
+    range.price(i.price);
+    range.percentage(i.percentage);
+
+    self.ranges.push(range);
+  };
+
+  !preventRangeInit && initializeNewRange();
 
   function initializeNewRange() {
-    var lastRange;
-
     self.ranges.push(new ConditionRange(self));
-    lastRange = self.ranges()[self.ranges().length - 1];
+  }
+
+  function subscribeRange(range) {
     [
       'to',
     ].map(function (f) {
-      return lastRange[f].subscribe(addNewRange);
+      return range[f].subscribe(addNewRange);
     }).forEach(function (s) {
       subscriptions.push(s);
     });
@@ -114,7 +146,7 @@ function Condition(billingMethod, parent) {
     var range;
 
     self.ranges().forEach(function (r) {
-      var isInfinity = r.price() && !r.to();
+      var isInfinity = (r.price() || r.percentage()) && !r.to();
       var isOnRange = r.to() >= subscribers;
 
       if (isInfinity || (isOnRange && r.isHigherThan(range))) {
@@ -123,16 +155,19 @@ function Condition(billingMethod, parent) {
     });
 
     return range;
-
   }
 
   function addNewRange(value) {
     if (value) {
-      subscriptions.forEach(function (s) {
-        s.dispose();
-      });
-      subscriptions = [];
+      disposeSubscriptions();
       initializeNewRange();
     }
+  }
+
+  function disposeSubscriptions() {
+    subscriptions.forEach(function (s) {
+        s.dispose();
+      });
+    subscriptions = [];
   }
 }

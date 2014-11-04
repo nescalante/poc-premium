@@ -2,14 +2,14 @@
 
 module.exports = {
   flatFee: createMethod('Flat Fee', 'flat-fee'),
-  revenueShare: createMethod('Revenue Share', 'revenue-share', true),
-  actualSubscribers: createMethod('Actual Subscribers', 'actual-subscribers'),
+  revenueShare: createMethod('Revenue Share', 'revenue-share'),
+  actualSubscribers: createMethod('Actual Subscribers', 'actual-subscribers', true),
 };
 
-function createMethod(name, template, isRevenueShare) {
+function createMethod(name, template, isActualSubscribers) {
   return {
     name: name,
     template: template,
-    isRevenueShare: !!isRevenueShare,
+    isActualSubscribers: !!isActualSubscribers,
   };
 }

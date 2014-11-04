@@ -27,7 +27,7 @@ input[type=number] {
 }
 
 .demo-mode .current-range input {
-  border: 1px solid blue;
+  border: 2px solid blue;
 }
 
 .condition {
@@ -169,7 +169,7 @@ select:disabled, select[disabled], select[disabled=""] {
 }
 
 
-.btn.btn-remove:hover {
+.btn.btn-remove-range:hover {
   background-color: #aaa;
   color: #333;
 }
