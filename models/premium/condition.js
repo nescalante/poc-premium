@@ -82,7 +82,7 @@ function Condition(billingMethod, parent, preventRangeInit) {
       if (self.priceMethod() === priceMethods.range) {
         total = range.price() * subscribers;
       }
-      else if (self.priceMethod() == priceMethods.incremental) {
+      else if (self.priceMethod() === priceMethods.incremental) {
 
         self.ranges().forEach(function (r) {
           var lastTo = last ? last.to() : 0;

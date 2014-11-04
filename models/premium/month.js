@@ -22,7 +22,7 @@ function Month(number, parent) {
     var ix = parent.months().indexOf(self);
 
     for (;ix < parent.months().length; ix++) {
-      if (!parent.months()[ix].testSubscribers() || parent.months()[ix].testSubscribers() == testSubscribers) {
+      if (!parent.months()[ix].testSubscribers() || parent.months()[ix].testSubscribers() === testSubscribers) {
         parent.months()[ix].testSubscribers(value);
       }
     }
@@ -34,7 +34,7 @@ function Month(number, parent) {
     var ix = parent.months().indexOf(self);
 
     for (;ix < parent.months().length; ix++) {
-      if (!parent.months()[ix].testRetailPrice() || parent.months()[ix].testRetailPrice() == testRetailPrice) {
+      if (!parent.months()[ix].testRetailPrice() || parent.months()[ix].testRetailPrice() === testRetailPrice) {
         parent.months()[ix].testRetailPrice(value);
       }
     }
