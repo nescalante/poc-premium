@@ -95,7 +95,7 @@ function Condition(billingMethod, parent, preventRangeInit) {
                 total += (r.to() - lastTo) * r.price();
               }
               else {
-                total += (r.to() + remaining) * r.price();
+                total += (r.to() - lastTo + remaining) * r.price();
                 remaining = 0;
               }
             }
