@@ -29,7 +29,7 @@ function ConditionRange(parent) {
       if (!self.to() && !self.price() && !self.percentage()) {
         self.remove();
       }
-      if (!self.to() && !self.$last()) {
+      if (!self.to() && !self.$last() && parent.ranges().length) {
         parent.ranges()[parent.ranges().length - 1].remove();
       }
     });

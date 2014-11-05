@@ -20,28 +20,20 @@ function Month(number, parent) {
   self.testSubscribers = ko.numericObservable();
   self.testRetailPrice = ko.numericObservable();
 
-  self.testSubscribers.subscribe(function (value) {
-    var ix = parent.months().indexOf(self);
+  ['testSubscribers', 'testRetailPrice'].forEach(function (f) {
+    var temp;
 
-    for (;ix < parent.months().length; ix++) {
-      if (!parent.months()[ix].testSubscribers() || parent.months()[ix].testSubscribers() === testSubscribers) {
-        parent.months()[ix].testSubscribers(value);
+    self[f].subscribe(function (value) {
+      var ix = parent.months().indexOf(self);
+
+      for (;ix < parent.months().length; ix++) {
+        if (!parent.months()[ix][f]() || parent.months()[ix][f]() === temp) {
+          parent.months()[ix][f](value);
+        }
       }
-    }
 
-    testSubscribers = value;
-  });
-
-  self.testRetailPrice.subscribe(function (value) {
-    var ix = parent.months().indexOf(self);
-
-    for (;ix < parent.months().length; ix++) {
-      if (!parent.months()[ix].testRetailPrice() || parent.months()[ix].testRetailPrice() === testRetailPrice) {
-        parent.months()[ix].testRetailPrice(value);
-      }
-    }
-
-    testRetailPrice = value;
+      temp = value;
+    });
   });
 
   self.testResult = ko.computed(function () {
