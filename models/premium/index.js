@@ -27,13 +27,19 @@ function ContractPremium() {
     // its evalution baby!
     json = eval('(' + global.localStorage.data + ')');
 
-    json.months.forEach(function (m) {
-      var month = self.months()[m.number - 1];
+    try
+    {
+      json.months.forEach(function (m) {
+        var month = self.months()[m.number - 1];
 
-      if (month) {
-        month.initialize(m);
-      }
-    });
+        if (month) {
+          month.initialize(m);
+        }
+      });
+    }
+    catch(err) {
+      global.localStorage.clear();
+    }
   }
 
   self.testResult = ko.computed(function () {

@@ -126,10 +126,26 @@ select:disabled, select[disabled], select[disabled=""] {
   color: #ccc;
 }
 
-.condition select, .condition input {
+.condition select, .condition input[type=text], .condition input[type=number] {
   width: 100%;
   margin: 5px 0;
   padding-left: 15px;
+}
+
+.condition .radio label {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.condition .radio input[type=radio] {
+  margin-left: -35px;
+  cursor: pointer;
+  outline: none;
+}
+
+.condition .radio input[type=radio] + span {
+  margin-left: 15px;
+  cursor: pointer;
 }
 
 .condition {
