@@ -222,31 +222,21 @@ select:disabled, select[disabled], select[disabled=""] {
   margin-top: 10px;
 }
 
-
 .btn.btn-remove-range:hover {
   background-color: #aaa;
   color: #333;
-}
-
-.test-subscribers {
-  margin-bottom: 10px;
-}
-
-.test-subscribers .price:before {
-  margin-top: 0;
-}
-
-.test-total {
-  float: right;
-}
-
-.test-total span {
-  display: block;
-  text-align: right;
 }
 
 .btn.btn-demo {
   float: right;
   margin-top: 20px;
   margin-bottom: 5px;
+}
+
+.condition {
+  margin: 5px;
+}
+
+.condition input[type=number] {
+  margin-top: 5px;
 }

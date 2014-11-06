@@ -35,8 +35,8 @@
       </div>
       <div class="col-xs-10 month-detail">
         <!-- ko foreach: products -->
-        <div class="row">
-          <div class="col-md-8 product">
+        <div class="row product">
+          <div class="col-md-8">
             <div class="row">
               <div class="col-md-6">
                 <select data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
@@ -67,7 +67,8 @@
               </div>
             </div>
             <a class="btn btn-primary" data-toggle="dropdown">
-              Add condition<span class="caret"></span>
+              Add condition
+              <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-bind="foreach: $root.billingMethods">
               <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.addCondition"></a></li>
@@ -85,25 +86,25 @@
             <!-- /ko -->
           </div>
         </div>
-        <div data-bind="foreach: conditions">
-          <div class="condition" data-bind="css: billingMethod.template">
-            <h4 data-bind="text: billingMethod.name"></h4>
-            <div class="row">
-              <div class="col-md-2">
-                <div class="row" data-bind="visible: billingMethod.isActualSubscribers">
-                  <div class="radio" data-bind="foreach: $root.priceMethods">
-                    <label>
-                      <input type="radio" class="col-md-6" data-bind="checkedValue: $data, checked: $parent.priceMethod" />
-                      <span data-bind="text: name"></span>
-                    </label>
-                  </div>
+        <!-- ko foreach: conditions -->
+        <div class="row condition" data-bind="css: billingMethod.template">
+          <h4 data-bind="text: billingMethod.name"></h4>
+          <div>
+            <div class="col-md-2">
+              <div class="row" data-bind="visible: billingMethod.isActualSubscribers">
+                <div class="radio" data-bind="foreach: $root.priceMethods">
+                  <label>
+                    <input type="radio" class="col-md-6" data-bind="checkedValue: $data, checked: $parent.priceMethod" />
+                    <span data-bind="text: name"></span>
+                  </label>
                 </div>
-             </div>
-              <div class="col-md-4" data-bind="template: billingMethod.template"></div>
-            </div>
-            <button class="btn btn-danger btn-remove" data-bind="click: remove">Remove</button>
+              </div>
+           </div>
+            <div class="col-md-4" data-bind="template: billingMethod.template"></div>
           </div>
+          <button class="btn btn-danger btn-remove" data-bind="click: remove">Remove</button>
         </div>
+        <!-- /ko -->
         <a class="btn btn-danger" data-bind="click: remove">Remove product</a>
         <!-- /ko -->
         <div data-bind="visible: !products().length">
