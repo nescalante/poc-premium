@@ -1,5 +1,9 @@
-var ContractPremium = require('./premium');
+'use strict';
+
+var config = require('./config');
+var premium = require('./premium');
 
 module.exports = {
-  ContractPremium: ContractPremium
+    config: config,
+    premium: premium,
 };

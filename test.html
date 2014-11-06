@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contract Premium</title>
+  <title>Contract Premium - Test</title>
   <link rel="stylesheet" href="components/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="styles/premium.css">
 </head>
@@ -9,7 +9,7 @@
   <div class="container" data-bind="css: { 'ready': true }">
     <div class="row">
       <h3 class="pull-left">2014</h3>
-      <a class="btn btn-primary btn-demo" href="test.html">Test contract</a>
+      <a class="btn btn-default btn-demo" href="index.html">Back to contract</a>
     </div>
     <!-- ko foreach: months -->
     <div class="row month">
@@ -17,79 +17,75 @@
         <h4 class="pull-left" data-bind="text: name"></h4>
         <div class="month-buttons">
           <div class="dropdown">
-            <a class="btn side-button side-main" type="button" data-bind="click: addProduct.bind($data)">
+            <a class="btn side-button side-main dropdown-toggle" type="button" data-toggle="dropdown">
               +
             </a>
+            <ul class="dropdown-menu" role="menu" data-bind="foreach: $root.billingMethods">
+              <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.newCondition.bind($data, $data)"></a></li>
+            </ul>
           </div>
-          <!-- ko if: !products().length -->
+          <!-- ko if: !conditions().length -->
           <div class="dropdown">
             <a class="btn side-button side-copy dropdown-toggle" type="button" data-toggle="dropdown">
               C
             </a>
-            <ul class="dropdown-menu" role="menu" data-bind="foreach: $root.months().filter(function (m) { return m.products().length; })">
+            <ul class="dropdown-menu" role="menu" data-bind="foreach: $root.months().filter(function (m) { return m.conditions().length; })">
               <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: 'Copy from ' + name, click: $parent.copyFrom.bind($data, $data)"></a></li>
             </ul>
           </div>
           <!-- /ko -->
+          <!-- ko if: conditions().length > 1 -->
+          <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
+          <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
+          <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
+          <!-- /ko -->
         </div>
       </div>
-      <div class="col-xs-10 month-detail">
-        <!-- ko foreach: products -->
-        <div class="row">
-          <div class="col-md-8 product">
-            <div class="row">
-              <div class="col-md-6">
-                <select data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
-              </div>
-              <div class="col-md-6">
-                <select data-bind="value: product, enable: serviceType, options: (serviceType() && serviceType().products) || [], optionsText: 'name', optionsCaption: serviceType() ? 'Select a product' : 'Select a service type'"></select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <input type="search" list="categories" autocomplete="off" placeholder="Type a category" data-bind="value: category" />
-                <datalist id="categories">
-                  <option value="B&aacute;sico"></option>
-                  <option value="Sub b&aacute;sico"></option>
-                  <option value="Bulk Hotel"></option>
-                  <option value="Combo"></option>
-                  <option value="Semi combo b&aacute;sico"></option>
-                  <option value="Semi combo sub b&aacute;sico"></option>
-                </datalist>
-              </div>
-              <div class="col-md-6">
-                <select data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <select data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
-              </div>
-            </div>
-            <a class="btn btn-primary" data-toggle="dropdown">
-              Add condition<span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-bind="foreach: $root.billingMethods">
-              <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.addCondition"></a></li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <b class="first-title">Default</b>
-            <div>
-              <input type="number" class="col-md-12" data-bind="value: defaultSubscribers" />
-            </div>
-            <!-- ko if: conditions().length > 1 -->
-            <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
-            <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
-            <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
-            <!-- /ko -->
-          </div>
-        </div>
+      <div class="col-xs-10">
         <div data-bind="foreach: conditions">
           <div class="condition" data-bind="css: billingMethod.template">
             <h4 data-bind="text: billingMethod.name"></h4>
-            <div class="row">
+            <div class="row month-detail">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <select data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
+                  </div>
+                  <div class="col-md-6">
+                    <select data-bind="value: product, enable: serviceType, options: (serviceType() && serviceType().products) || [], optionsText: 'name', optionsCaption: serviceType() ? 'Select a product' : 'Select a service type'"></select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <select data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
+                  </div>
+                  <div class="col-md-6">
+                    <select data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="search" list="categories" autocomplete="off" placeholder="Type a category" data-bind="value: category" />
+                    <datalist id="categories">
+                      <option value="B&aacute;sico">
+                      <option value="Sub b&aacute;sico">
+                      <option value="Bulk Hotel">
+                      <option value="Combo">
+                      <option value="Semi combo b&aacute;sico">
+                      <option value="Semi combo sub b&aacute;sico">
+                    </datalist>
+                  </div>
+                </div>
+              </div>
               <div class="col-md-2">
+                <div class="row">
+                  <div class="col-md-12">
+                    <b class="first-title">Default</b>
+                    <div>
+                      <input type="number" class="col-md-12" data-bind="value: defaultSubscribers" />
+                    </div>
+                  </div>
+                </div>
                 <div class="row" data-bind="visible: billingMethod.isActualSubscribers">
                   <div class="radio" data-bind="foreach: $root.priceMethods">
                     <label>
@@ -104,9 +100,7 @@
             <button class="btn btn-danger btn-remove" data-bind="click: remove">Remove</button>
           </div>
         </div>
-        <a class="btn btn-danger" data-bind="click: remove">Remove product</a>
-        <!-- /ko -->
-        <div data-bind="visible: !products().length">
+        <div data-bind="visible: !conditions().length">
           <h5>To get started with <span data-bind="text: name"></span>, add some condition with the "+" button</h5>
         </div>
       </div>
@@ -172,6 +166,11 @@
   <script src="components/jquery/jquery.js"></script>
   <script src="components/bootstrap/js/bootstrap.js"></script>
   <script src="bundle.js"></script>
-  <script>use(models.premium.Contract);</script>
+  <script>
+    var ContractTest = models.premium.ContractTest;
+    var model = new ContractTest();
+
+    ko.applyBindings(model);
+  </script>
 </body>
 </html>

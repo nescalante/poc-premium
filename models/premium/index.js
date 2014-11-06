@@ -1,77 +1,15 @@
 'use strict';
 
+var Contract = require('./contract.js');
 var Month = require('./month.js');
-var config = require('../config');
+var Condition = require('./condition.js');
+var ContractRange = require('./range.js');
+var ContractTest = require('./test.js');
 
-module.exports = ContractPremium;
-
-function ContractPremium() {
-  var self = this;
-  var json;
-
-  self.billingMethods = [config.billingMethods.flatFee, config.billingMethods.revenueShare, config.billingMethods.actualSubscribers];
-  self.priceMethods = [config.priceMethods.range, config.priceMethods.incremental];
-  self.invoiceGroups = config.invoiceGroups;
-  self.serviceTypes = config.serviceTypes;
-  self.subscribersPackages = config.subscribersPackages;
-  self.months = ko.observableArray();
-  self.selectedCondition = ko.observable();
-  self.demoMode = ko.observable();
-
-  // initial data
-  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (i) {
-    return new Month(i, self);
-  }).forEach(addMonth);
-
-  if (global.localStorage && global.localStorage.data) {
-    // its evalution baby!
-    json = eval('(' + global.localStorage.data + ')');
-
-    try
-    {
-      json.months.forEach(function (m) {
-        var month = self.months()[m.number - 1];
-
-        if (month) {
-          month.initialize(m);
-        }
-      });
-    }
-    catch(err) {
-      global.localStorage.clear();
-    }
-  }
-
-  self.testResult = ko.computed(function () {
-    if (self.demoMode()) {
-      return self.months().map(function (m) {
-        return m.testResult();
-      }).reduce(function (a, b) {
-        return (a || 0) + (b || 0);
-      }, 0);
-    }
-  });
-
-  function save() {
-    var data = JSON.stringify({
-      months: self.months().map(function (m) {
-        return m.getMonthData();
-      })
-    });
-
-    global.localStorage['data'] = data;
-  }
-
-  global.onbeforeunload = save;
-
-  function addMonth(month) {
-    self.months.push(month);
-  }
-
-  (function saveForever() {
-    setInterval(function () {
-      save();
-      saveForever();
-    }, 3000);
-  })();
-}
+module.exports = {
+  Contract: Contract,
+  Month: Month,
+  Condition: Condition,
+  ContractRange: ContractRange,
+  ContractTest: ContractTest,
+};

@@ -27,12 +27,11 @@ input:-webkit-autofill {
 .month h5 {
   text-align: center;
   padding: 30px;
-  border: 1px solid #ddd;
   background-color: #fff;
 }
 
 .month:nth-child(even) h5 {
-  background-color: #f3f3f3;
+  border: 1px solid #fff;
 }
 
 .price div:before, div.price:before {
@@ -55,7 +54,12 @@ input[type=number], input[type=search] {
   padding-right: 10px;
 }
 
-.month-detail select {
+.month:nth-child(even) .month-detail {
+  border: 2px solid #eee;
+  background-color: #fff;
+}
+
+.product select {
   height: 26px;
 }
 
@@ -63,11 +67,9 @@ input[type=number], input[type=search] {
   border: 2px solid blue;
 }
 
-.condition {
-  border: 1px solid black;
+.product {
   margin-right: -5px;
   margin-left: -15px;
-  padding: 0 15px 15px;
 }
 
 .month-buttons a.side-button {
@@ -148,34 +150,29 @@ select:disabled, select[disabled], select[disabled=""] {
   color: #ccc;
 }
 
-.condition select, .condition input[type=text], .condition input[type=number], .condition input[type=search] {
+.product select, .product input[type=text], .product input[type=number], .product input[type=search] {
   width: 100%;
   margin: 5px 0;
   padding-left: 15px;
 }
 
-.condition .radio label {
+.product .radio label {
   width: 100%;
   margin-bottom: 5px;
 }
 
-.condition .radio input[type=radio] {
+.product .radio input[type=radio] {
   margin-left: -35px;
   cursor: pointer;
   outline: none;
 }
 
-.condition .radio input[type=radio] + span {
+.product .radio input[type=radio] + span {
   margin-left: 15px;
   cursor: pointer;
 }
 
-.condition {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.condition b.first-title {
+.product b.first-title {
   position: absolute;
   top: -20px;
 }
