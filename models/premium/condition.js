@@ -17,16 +17,11 @@ function Condition(billingMethod, parent, preventRangeInit) {
   self.serviceType = ko.observable();
   self.subscribersPackage = ko.observable();
   self.product = ko.observable();
+  self.category = ko.observable();
   self.price = ko.numericObservable();
   self.ranges = ko.observableArray();
   self.defaultSubscribers = ko.numericObservable();
   self.currentRange = ko.observable();
-
-  self.addToMonth = function () {
-    parent.conditions.push(self);
-
-    return false;
-  };
 
   self.ranges.subscribe(function () {
     var lastRange = self.ranges()[self.ranges().length - 1];

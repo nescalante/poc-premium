@@ -19,5 +19,5 @@
   "indent": 2,
   "evil": true,
   "node": true,
-  "predef": ["ko", "window"]
+  "predef": ["ko", "window", "$"]
 }

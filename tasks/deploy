@@ -3,8 +3,4 @@
 npm test
 browserify main.js -d -o bundle.js
 
-rm -rf components
-mkdir components
-
-cp -r bower_components/jquery/dist components/jquery
-cp -r bower_components/bootstrap/dist components/bootstrap
+sh tasks/components

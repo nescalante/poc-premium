@@ -1,3 +1,4 @@
 #!/bin/bash
 
+sh tasks/components
 watchify main.js -d -o bundle.js

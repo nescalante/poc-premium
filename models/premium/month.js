@@ -77,6 +77,7 @@ function Month(number, parent) {
     obj.priceMethod(get(config.priceMethods, condition.priceMethod));
     obj.invoiceGroup(get(config.invoiceGroups, condition.invoiceGroup));
     obj.product(get(config.products, condition.product));
+    obj.category(condition.category);
     obj.defaultSubscribers(condition.defaultSubscribers);
 
     (condition.ranges || []).forEach(obj.addRange);
@@ -100,6 +101,7 @@ function Month(number, parent) {
           serviceType: c.serviceType() && c.serviceType().name,
           subscribersPackage: c.subscribersPackage() && c.subscribersPackage().name,
           product: c.product() && c.product().name,
+          category: c.category(),
           price: c.price(),
           defaultSubscribers: c.defaultSubscribers(),
           ranges: c.ranges().map(function (r) {

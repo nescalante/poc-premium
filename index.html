@@ -4,11 +4,9 @@
   <title>POC - Premium</title>
   <link rel="stylesheet" href="components/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="styles/premium.css">
-  <script src="components/jquery/jquery.js"></script>
-  <script src="components/bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
-  <div class="container" data-bind="css: { 'demo-mode': demoMode }">
+  <div class="container" data-bind="css: { 'demo-mode': demoMode, 'ready': true }">
     <div class="row">
       <h3 class="pull-left">2014</h3>
       <button class="btn btn-primary btn-demo" data-bind="css: { active: demoMode }, click: function () { demoMode(!demoMode()); }">Demo mode</button>
@@ -59,15 +57,23 @@
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <select class="col-md-6" data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
+                    <select data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
                   </div>
                   <div class="col-md-6">
-                    <select class="col-md-6" data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
+                    <select data-bind="value: subscribersPackage, options: $root.subscribersPackages, optionsText: 'name', optionsCaption: 'Select a package'"></select>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <input type="text" placeholder="Type a category" class="col-md-6" />
+                    <input type="search" list="categories" autocomplete="off" placeholder="Type a category" data-bind="value: category" />
+                    <datalist id="categories">
+                      <option value="B&aacute;sico">
+                      <option value="Sub b&aacute;sico">
+                      <option value="Bulk Hotel">
+                      <option value="Combo">
+                      <option value="Semi combo b&aacute;sico">
+                      <option value="Semi combo sub b&aacute;sico">
+                    </datalist>
                   </div>
                 </div>
               </div>
@@ -185,6 +191,8 @@
     </div>
     <!-- /ko -->
   </script>
+  <script src="components/jquery/jquery.js"></script>
+  <script src="components/bootstrap/js/bootstrap.js"></script>
   <script src="bundle.js"></script>
   <script>
     var ContractPremium = models.ContractPremium;
