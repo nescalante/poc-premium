@@ -20,10 +20,7 @@ function Condition(billingMethod, parent, preventRangeInit) {
   self.price = ko.numericObservable();
   self.ranges = ko.observableArray();
   self.defaultSubscribers = ko.numericObservable();
-
-  self.currentRange = ko.computed(function () {
-    return getRangeFor(parent.testSubscribers());
-  });
+  self.currentRange = ko.observable();
 
   self.addToMonth = function () {
     parent.conditions.push(self);
@@ -71,6 +68,9 @@ function Condition(billingMethod, parent, preventRangeInit) {
     var remaining = subscribers;
     var total = 0;
     var last;
+
+    // just for visual help
+    self.currentRange(range);
 
     if (billingMethod === billingMethods.flatFee) {
       total = self.price();

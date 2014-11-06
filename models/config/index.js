@@ -14,26 +14,14 @@ module.exports = {
   products: products,
   serviceTypes: serviceTypes,
   subscribersPackages: subscribersPackages,
-  getByName: get,
+  getByName: getByName,
+  get: get
 };
 
-function get(type, name) {
-  if (type === billingMethods) {
-    return getFromArray([billingMethods.flatFee, billingMethods.revenueShare, billingMethods.actualSubscribers], name);
-  }
-  else if (type === priceMethods) {
-    return getFromArray([priceMethods.range, priceMethods.incremental], name);
-  }
-  else {
-    return getFromArray(type, name);
-  }
-
+function getByName(type, name) {
+  return get(type).filter(function (i) { return i.name === name; })[0];
 }
 
-function getFromArray(array, name) {
-  var a = array.filter(function (a) {
-    return a.name === name;
-  })[0];
-
-  return(a);
+function get(type) {
+  return Object.keys(type).map(function (k) { return type[k]; });
 }

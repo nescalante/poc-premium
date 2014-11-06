@@ -1,4 +1,4 @@
-#[Download](https://github.com/nescalante/poc-premium/archive/master.zip)
+#[Download POC](https://github.com/nescalante/poc-premium/archive/master.zip)
 
 Mostrar una grilla que representan los meses del año (3 x 4), en cada celda hay que poder agregar elementos de tipo Price Method. 
 Esos elementos de Price Method pueden ser de 3 tipos:

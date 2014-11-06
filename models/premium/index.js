@@ -43,11 +43,13 @@ function ContractPremium() {
   }
 
   self.testResult = ko.computed(function () {
-    return self.months().map(function (m) {
-      return m.testResult();
-    }).reduce(function (a, b) {
-      return (a || 0) + (b || 0);
-    }, 0);
+    if (self.demoMode()) {
+      return self.months().map(function (m) {
+        return m.testResult();
+      }).reduce(function (a, b) {
+        return (a || 0) + (b || 0);
+      }, 0);
+    }
   });
 
   function save() {

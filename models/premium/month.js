@@ -37,20 +37,23 @@ function Month(number, parent) {
   });
 
   self.testResult = ko.computed(function () {
-    var condition = self.summaryCondition();
-    var results = self.conditions().map(function (c) {
-      return c.test(self.testSubscribers(), self.testRetailPrice());
-    });
-    var totals = results.map(function (r) { return r.total; });
+    // test only if needed
+    if (parent.demoMode()) {
+      var condition = self.summaryCondition();
+      var results = self.conditions().map(function (c) {
+        return c.test(self.testSubscribers(), self.testRetailPrice());
+      });
+      var totals = results.map(function (r) { return r.total; });
 
-    if (condition === 'lower') {
-      return totals.sort(function (a, b) { return a - b; })[0];
-    }
-    else if (condition === 'higher') {
-      return totals.sort(function (a, b) { return a - b; })[totals.length - 1];
-    }
-    else if (condition === 'average') {
-      return totals.reduce(function (a, b) { return a + b; }, 0) / totals.length;
+      if (condition === 'lower') {
+        return totals.sort(function (a, b) { return a - b; })[0];
+      }
+      else if (condition === 'higher') {
+        return totals.sort(function (a, b) { return a - b; })[totals.length - 1];
+      }
+      else if (condition === 'average') {
+        return totals.reduce(function (a, b) { return a + b; }, 0) / totals.length;
+      }
     }
   });
 
