@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] falta category (autocomplete magico)
+- [x] falta category (autocomplete magico)
 - [ ] descuentos?
 - [ ] subs son por señal, categoria
 - [ ] agregar minimo garantizado a actual subscribers
