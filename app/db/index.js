@@ -1,4 +1,6 @@
-module.exports = db
+'use strict';
+
+module.exports = db;
 
 function db(table) {
   return {
@@ -12,9 +14,9 @@ function db(table) {
       }
     },
     save: function (data) {
-      var data = JSON.stringify(data);
+      var str = JSON.stringify(data);
 
-      global.localStorage[table] = data;
+      global.localStorage[table] = str;
     }
   };
 }

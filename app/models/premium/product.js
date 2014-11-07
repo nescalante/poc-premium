@@ -42,7 +42,7 @@ function Product(parent) {
       total = totals.reduce(function (a, b) { return a + b; }, 0);
     }
 
-    var selected = condition !== 'average' && results.length > 1 ? results.filter(function (r) { return r.total === total })[0] : null;
+    selected = condition !== 'average' && results.length > 1 ? results.filter(function (r) { return r.total === total; })[0] : null;
 
     return {
       total: total || 0,

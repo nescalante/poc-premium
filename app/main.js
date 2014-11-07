@@ -1,10 +1,11 @@
+'use strict';
+
 global.ko = require('knockout');
 global.models = require('./models');
+global.use = use;
 
 // extensions
 ko.numericObservable = require('./extensions/numericObservable.js');
-
-global.use = use;
 
 function use(Model) {
   var model = new Model();

@@ -22,8 +22,6 @@ function ContractTest() {
     self.months.push(month);
   });
 
-
-
   function getTotal(list) {
     return function () {
       var totals = list().map(function (p) {
@@ -31,7 +29,7 @@ function ContractTest() {
       });
 
       return totals.reduce(function (a, b) { return a + b; }, 0);
-    }
+    };
   }
 
   function setAsTesting(product) {

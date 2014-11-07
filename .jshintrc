@@ -14,10 +14,11 @@
   "strict": true,
   "immed": true,
   "expr": true,
+  "browser": true,
   "latedef": "nofunc",
   "quotmark": "single",
   "indent": 2,
   "evil": true,
   "node": true,
-  "predef": ["ko", "window", "$"]
+  "predef": ["ko", "$", "confirm"]
 }
