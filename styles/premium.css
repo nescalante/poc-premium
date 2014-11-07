@@ -3,10 +3,35 @@ input[type=text], input[type=search], input[type=number], select {
   color: #333;
 }
 
+button {
+  outline: none !important;
+}
+
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   background-color: #fff;
   color: #333;
+}
+
+select.product-selection {
+  border: 0;
+  margin: 15px 0;
+  font-size: 20px;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+select.product-selection:hover {
+  text-decoration: underline;
+}
+
+select.product-selection option {
+  font-size: 14px;
+}
+
+select.product-selection + div {
+  margin-top: 10px;
 }
 
 .container {
@@ -156,22 +181,6 @@ select:disabled, select[disabled], select[disabled=""] {
   padding-left: 15px;
 }
 
-.product .radio label {
-  width: 100%;
-  margin-bottom: 5px;
-}
-
-.product .radio input[type=radio] {
-  margin-left: -35px;
-  cursor: pointer;
-  outline: none;
-}
-
-.product .radio input[type=radio] + span {
-  margin-left: 15px;
-  cursor: pointer;
-}
-
 .product b.first-title {
   position: absolute;
   top: -20px;
@@ -210,7 +219,15 @@ select:disabled, select[disabled], select[disabled=""] {
   color: #eee;
 }
 
-.btn.btn-remove-range {
+.btn.btn-add-condition {
+  margin-top: 15px;
+}
+
+.btn.btn-add-condition + .dropdown-menu {
+  margin-left: 15px;
+}
+
+.btn.btn-remove-item {
   margin-top: 6px;
   padding: 0 6px;
   background-color: #333;
@@ -218,13 +235,27 @@ select:disabled, select[disabled], select[disabled=""] {
   border-radius: 30px;
 }
 
-.btn.btn-remove {
-  margin-top: 10px;
-}
-
-.btn.btn-remove-range:hover {
+.btn.btn-remove-item:hover {
   background-color: #aaa;
   color: #333;
+}
+
+.btn.btn-remove-condition {
+  position: absolute;
+  right: 11px;
+  margin-top: -11px;
+}
+
+.btn.btn-remove-item.btn-remove-range {
+  color: #d9534f;
+  background-color: transparent;
+  margin-left: -10px;
+}
+
+.btn.btn-remove-item.btn-remove-range:hover {
+  background-color: #d9534f;;
+  color: white;
+  border-color: #d43f3a;
 }
 
 .btn.btn-demo {
@@ -234,9 +265,38 @@ select:disabled, select[disabled], select[disabled=""] {
 }
 
 .condition {
-  margin: 5px;
+  margin: 15px 5px;
 }
 
 .condition input[type=number] {
   margin-top: 5px;
+}
+
+.condition-info {
+  margin-top: 15px;
+  padding-bottom: 15px;
+}
+
+.condition-info .radio label {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.condition-info .radio input[type=radio] {
+  margin-left: -35px;
+  cursor: pointer;
+  outline: none;
+}
+
+.condition-info .radio input[type=radio] + span {
+  margin-left: 45px;
+  cursor: pointer;
+}
+
+.btn.btn-remove-product {
+  margin-bottom: 20px;
+}
+
+.btn.btn-remove-product + hr {
+  margin-top: 0;
 }

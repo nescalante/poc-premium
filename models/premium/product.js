@@ -13,7 +13,6 @@ function Product(parent) {
   var isSorting;
 
   self.invoiceGroup = ko.observable();
-  self.serviceType = ko.observable();
   self.product = ko.observable();
   self.subscribersPackage = ko.observable();
   self.category = ko.observable();
@@ -42,11 +41,17 @@ function Product(parent) {
     }
   };
 
-  self.remove = function () {
-    var result = parent.products()
-      .filter(function (p) { return p !== self; });
+  self.$last = ko.computed(function () {
+    return parent.products()[parent.products().length - 1] === self;
+  });
 
-    parent.products(result);
+  self.remove = function () {
+    if (confirm('Are you sure you want to remove this product')) {
+      var result = parent.products()
+        .filter(function (p) { return p !== self; });
+
+      parent.products(result);
+    }
   };
 
   self.addCondition = function(obj) {

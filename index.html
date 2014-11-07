@@ -35,16 +35,20 @@
       </div>
       <div class="col-xs-10 month-detail">
         <!-- ko foreach: products -->
+        <select class="col-md-4 product-selection" data-bind="value: product, optionsText: 'name', optionsCaption: 'Select a product', foreach: $root.serviceTypes">
+          <optgroup data-bind="attr: { label: name }, foreach: products">
+            <option data-bind="value: $data, text: name"></option>
+          </optgroup>
+        </select>
+        <div class="col-md-4">
+          <!-- ko if: conditions().length > 1 -->
+          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
+          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
+          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
+          <!-- /ko -->
+        </div>
         <div class="row product">
           <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-6">
-                <select data-bind="value: serviceType, options: $root.serviceTypes, optionsText: 'name', optionsCaption: 'Select a service type'"></select>
-              </div>
-              <div class="col-md-6">
-                <select data-bind="value: product, enable: serviceType, options: (serviceType() && serviceType().products) || [], optionsText: 'name', optionsCaption: serviceType() ? 'Select a product' : 'Select a service type'"></select>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-6">
                 <input type="search" list="categories" autocomplete="off" placeholder="Type a category" data-bind="value: category" />
@@ -66,7 +70,7 @@
                 <select data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
               </div>
             </div>
-            <a class="btn btn-primary" data-toggle="dropdown">
+            <a class="btn btn-primary btn-add-condition" data-toggle="dropdown">
               Add condition
               <span class="caret"></span>
             </a>
@@ -74,38 +78,32 @@
               <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.addCondition"></a></li>
             </ul>
           </div>
-          <div class="col-md-4">
-            <b class="first-title">Default</b>
+          <div class="col-md-3">
+            <b class="first-title">Default subscribers</b>
             <div>
-              <input type="number" class="col-md-12" data-bind="value: defaultSubscribers" />
+              <input type="number" data-bind="value: defaultSubscribers" />
             </div>
-            <!-- ko if: conditions().length > 1 -->
-            <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
-            <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
-            <a class="btn side-button" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
-            <!-- /ko -->
           </div>
         </div>
         <!-- ko foreach: conditions -->
         <div class="row condition" data-bind="css: billingMethod.template">
-          <h4 data-bind="text: billingMethod.name"></h4>
-          <div>
-            <div class="col-md-2">
-              <div class="row" data-bind="visible: billingMethod.isActualSubscribers">
-                <div class="radio" data-bind="foreach: $root.priceMethods">
-                  <label>
-                    <input type="radio" class="col-md-6" data-bind="checkedValue: $data, checked: $parent.priceMethod" />
-                    <span data-bind="text: name"></span>
-                  </label>
-                </div>
+          <button class="btn btn-remove-item btn-remove-condition" data-bind="click: remove">&times;</button>
+          <h4 data-bind="text: billingMethod.name" class="col-md-4"></h4>
+          <div class="col-md-8 condition-info">
+            <div class="col-md-6">
+              <div class="radio" data-bind="visible: billingMethod.isActualSubscribers, foreach: $root.priceMethods">
+                <label>
+                  <input type="radio" class="col-md-6" data-bind="checkedValue: $data, checked: $parent.priceMethod" />
+                  <span data-bind="text: name"></span>
+                </label>
               </div>
-           </div>
-            <div class="col-md-4" data-bind="template: billingMethod.template"></div>
+            </div>
+            <div class="col-md-6" data-bind="template: billingMethod.template"></div>
           </div>
-          <button class="btn btn-danger btn-remove" data-bind="click: remove">Remove</button>
         </div>
         <!-- /ko -->
-        <a class="btn btn-danger" data-bind="click: remove">Remove product</a>
+        <a class="btn btn-danger btn-remove-product" data-bind="click: remove">Remove product</a>
+        <hr data-bind="visible: !$last()">
         <!-- /ko -->
         <div data-bind="visible: !products().length">
           <h5>To get started with <span data-bind="text: name"></span>, add some condition with the "+" button</h5>
@@ -141,7 +139,7 @@
       <div class="col-md-6">
         <input type="number" class="col-md-12" data-bind="value: percentage" />
       </div>
-      <button class="btn btn-remove-range" data-bind="click: remove, visible: $parent.ranges().length > 1 && !$last()">
+      <button class="btn btn-remove-item btn-remove-range" data-bind="click: remove, visible: $parent.ranges().length > 1 && !$last()">
         &times;
       </button>
     </div>
@@ -164,7 +162,7 @@
       <div class="col-md-6 price">
         <input type="number" class="col-md-12" data-bind="value: price" />
       </div>
-      <button class="btn btn-remove-range" data-bind="click: remove, visible: $parent.ranges().length > 1 && !$last()">
+      <button class="btn btn-remove-item btn-remove-range" data-bind="click: remove, visible: $parent.ranges().length > 1 && !$last()">
         &times;
       </button>
     </div>

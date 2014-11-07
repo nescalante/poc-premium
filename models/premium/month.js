@@ -3,6 +3,7 @@
 var Condition = require('./condition.js');
 var Product = require('./product.js');
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+var config = require('../config');
 
 module.exports = Month;
 
@@ -33,6 +34,10 @@ function Month(number, parent) {
       product.testSubscribers(obj.testSubscribers);
       product.testRetailPrice(obj.testRetailPrice);
       product.defaultSubscribers(obj.defaultSubscribers);
+      product.invoiceGroup(config.getByName(config.invoiceGroups, obj.invoiceGroup));
+      product.subscribersPackage(config.getByName(config.subscribersPackages, obj.subscribersPackage));
+      product.product(config.getByName(config.products, obj.product));
+      product.category(obj.category);
 
       (obj.conditions || []).forEach(product.addCondition);
     }
@@ -48,7 +53,6 @@ function Month(number, parent) {
           testSubscribers: p.testSubscribers(),
           testRetailPrice: p.testRetailPrice(),
           invoiceGroup: p.invoiceGroup() && p.invoiceGroup().name,
-          serviceType: p.serviceType() && p.serviceType().name,
           subscribersPackage: p.subscribersPackage() && p.subscribersPackage().name,
           product: p.product() && p.product().name,
           category: p.category(),
