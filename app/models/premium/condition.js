@@ -96,7 +96,7 @@ function Condition(billingMethod, parent, preventRangeInit) {
     }
 
     return {
-      total: total,
+      total: total || 0,
       range: range,
       condition: self,
     };

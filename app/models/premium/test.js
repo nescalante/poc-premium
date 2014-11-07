@@ -7,7 +7,10 @@ var db = require('../../db');
 module.exports = ContractTest;
 
 function ContractTest() {
+  var self = this;
+
   self.months = ko.observableArray();
+  self.testResult = ko.computed(getTotal(self.months));
 
   db('months').get().forEach(function (m) {
     var month = new Month(m.number, self);
@@ -19,7 +22,7 @@ function ContractTest() {
     self.months.push(month);
   });
 
-  self.testResult = ko.computed(getTotal(self.months));
+
 
   function getTotal(list) {
     return function () {
@@ -27,7 +30,7 @@ function ContractTest() {
         return p.testResult();
       });
 
-      total = totals.reduce(function (a, b) { return a + b; }, 0);
+      return totals.reduce(function (a, b) { return a + b; }, 0);
     }
   }
 
@@ -40,13 +43,19 @@ function ContractTest() {
     });
 
     [product.testRetailPrice, product.testSubscribers].forEach(function (f) {
-      var calc = product.calculate(product.testSubscribers(), product.testRetailPrice());
+      f.subscribe(function () { doTest(product); });
+    });
 
-      product.testResult(calc.total);
+    doTest(product);
+  }
 
-      calc.conditions.forEach(function (c) {
-        c.currentRange(c.range);
-      });
+  function doTest(product) {
+    var calc = product.calculate(product.testSubscribers(), product.testRetailPrice());
+
+    product.testResult(calc.total);
+
+    calc.conditions.forEach(function (c) {
+      c.condition.currentRange(c.range);
     });
   }
 }

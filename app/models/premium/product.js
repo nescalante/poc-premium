@@ -38,11 +38,14 @@ function Product(parent) {
     else if (condition === 'average') {
       total = totals.reduce(function (a, b) { return a + b; }, 0) / totals.length;
     }
+    else if (condition === 'sum') {
+      total = totals.reduce(function (a, b) { return a + b; }, 0);
+    }
 
     var selected = condition !== 'average' && results.length > 1 ? results.filter(function (r) { return r.total === total })[0] : null;
 
     return {
-      total: total,
+      total: total || 0,
       conditions: results,
       selected: selected && selected.condition,
     };

@@ -45,6 +45,7 @@
           <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
           <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
           <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
+          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'sum'), css: { 'active': summaryCondition() == 'sum' }">&</a>
           <!-- /ko -->
         </div>
         <div class="row product">
@@ -147,7 +148,7 @@
   </script>
   <script type="text/html" id="actual-subscribers">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <b class="first-title">Up to</b>
       </div>
       <div class="col-md-6">
