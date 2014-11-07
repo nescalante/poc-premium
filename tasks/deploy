@@ -1,6 +1,6 @@
 #!/bin/bash
 
 npm test
-browserify main.js -d -o bundle.js
+browserify app/main.js -d -o bundle.js
 
 sh tasks/components

@@ -17,7 +17,7 @@
         <h4 class="pull-left" data-bind="text: name"></h4>
         <div class="month-buttons">
           <div class="dropdown">
-            <a class="btn side-button side-main" type="button" data-bind="click: addProduct.bind($data)">
+            <a class="btn side-button side-main" type="button" data-bind="click: addProduct.bind($data, null)">
               +
             </a>
           </div>
@@ -132,7 +132,7 @@
       </div>
     </div>
     <!-- ko foreach: ranges -->
-    <div class="row" data-bind="css: { 'current-range': $parent.currentRange() === $data }">
+    <div class="row">
       <div class="col-md-5">
         <input type="number" class="col-md-12" data-bind="value: to, event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
       </div>
@@ -155,7 +155,7 @@
       </div>
     </div>
     <!-- ko foreach: ranges -->
-    <div class="row" data-bind="css: { 'current-range': $parent.currentRange() === $data }">
+    <div class="row">
       <div class="col-md-5">
         <input type="number" class="col-md-12" data-bind="value: to, event: { blur: $parent.sort }, attr: { placeholder: $last() ? '&infin;' : '' }" />
       </div>

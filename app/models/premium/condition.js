@@ -12,10 +12,9 @@ function Condition(billingMethod, parent, preventRangeInit) {
   var isSorting;
 
   self.billingMethod = billingMethod;
-  self.priceMethod = ko.observable();
+  self.priceMethod = ko.observable(priceMethods.range);
   self.price = ko.numericObservable();
   self.ranges = ko.observableArray();
-  self.currentRange = ko.observable();
 
   self.ranges.subscribe(function () {
     var lastRange = self.ranges()[self.ranges().length - 1];
@@ -52,14 +51,11 @@ function Condition(billingMethod, parent, preventRangeInit) {
     parent.conditions(result);
   };
 
-  self.test = function(subscribers, retailPrice) {
+  self.calculate = function(subscribers, retailPrice) {
     var range = getRangeFor(subscribers);
     var remaining = subscribers;
     var total = 0;
     var last;
-
-    // just for visual help
-    self.currentRange(range);
 
     if (billingMethod === billingMethods.flatFee) {
       total = self.price();
@@ -102,6 +98,7 @@ function Condition(billingMethod, parent, preventRangeInit) {
     return {
       total: total,
       range: range,
+      condition: self,
     };
   };
 

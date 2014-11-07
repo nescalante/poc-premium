@@ -20,25 +20,32 @@ function Product(parent) {
   self.defaultSubscribers = ko.numericObservable();
   self.conditions = ko.observableArray();
   self.summaryCondition = ko.observable('lower');
-  self.testSubscribers = ko.numericObservable();
-  self.testRetailPrice = ko.numericObservable();
 
-  self.test = function (subscribers, retailPrice) {
+  self.calculate = function (subscribers, retailPrice) {
+    var total, selected;
     var condition = self.summaryCondition();
     var results = self.conditions().map(function (c) {
-      return c.test(subscribers, retailPrice);
+      return c.calculate(subscribers, retailPrice);
     });
     var totals = results.map(function (r) { return r.total; });
 
     if (condition === 'lower') {
-      return totals.sort(function (a, b) { return a - b; })[0];
+      total = totals.sort(function (a, b) { return a - b; })[0];
     }
     else if (condition === 'higher') {
-      return totals.sort(function (a, b) { return a - b; })[totals.length - 1];
+      total = totals.sort(function (a, b) { return a - b; })[totals.length - 1];
     }
     else if (condition === 'average') {
-      return totals.reduce(function (a, b) { return a + b; }, 0) / totals.length;
+      total = totals.reduce(function (a, b) { return a + b; }, 0) / totals.length;
     }
+
+    var selected = condition !== 'average' && results.length > 1 ? results.filter(function (r) { return r.total === total })[0] : null;
+
+    return {
+      total: total,
+      conditions: results,
+      selected: selected && selected.condition,
+    };
   };
 
   self.$last = ko.computed(function () {

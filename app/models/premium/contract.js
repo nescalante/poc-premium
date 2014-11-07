@@ -2,6 +2,7 @@
 
 var Month = require('./month.js');
 var config = require('../config');
+var db = require('../../db');
 
 module.exports = ContractPremium;
 
@@ -21,41 +22,26 @@ function ContractPremium() {
   // initial data
   getInitialMonths().forEach(addMonth);
 
-  if (global.localStorage && global.localStorage.data) {
-    // its evalution baby!
-    json = eval('(' + global.localStorage.data + ')');
+  try
+  {
+    db('months').get().forEach(function (m) {
+      var month = self.months()[m.number - 1];
 
-    try
-    {
-      json.months.forEach(function (m) {
-        var month = self.months()[m.number - 1];
-
-        if (month) {
-          month.initialize(m);
-        }
-      });
-    }
-    catch(err) {
-      console.error('Error while trying to fetch data :( \n' +
-        '  The message was: ' + err.message + '\n' +
-        '  Have fun looking over the stack: \n', err.stack);
-      global.localStorage.clear();
-
-      // everything went wrong, clear months and re-try
-      self.months([]);
-      getInitialMonths().forEach(addMonth);
-    }
+      if (month) {
+        month.initialize(m);
+      }
+    });
   }
+  // just in case
+  catch(err) {
+    console.error('Error while trying to fetch data :( \n' +
+      '  The message was: ' + err.message + '\n' +
+      '  Have fun looking over the stack: \n', err.stack);
 
-  self.testResult = ko.computed(function () {
-    if (self.demoMode()) {
-      return self.months().map(function (m) {
-        return m.testResult();
-      }).reduce(function (a, b) {
-        return (a || 0) + (b || 0);
-      }, 0);
-    }
-  });
+    // everything went wrong, clear months and re-try
+    self.months([]);
+    getInitialMonths().forEach(addMonth);
+  }
 
   function getInitialMonths() {
     return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (i) {
@@ -64,13 +50,11 @@ function ContractPremium() {
   }
 
   function save() {
-    var data = JSON.stringify({
-      months: self.months().map(function (m) {
-        return m.getMonthData();
-      })
+    var data = self.months().map(function (m) {
+      return m.getMonthData();
     });
 
-    global.localStorage['data'] = data;
+    db('months').save(data);
   }
 
   global.onbeforeunload = save;

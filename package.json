@@ -2,7 +2,7 @@
   "name": "poc-premium",
   "version": "0.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "app/main.js",
   "scripts": {
     "test": "sh tasks/test",
     "build": "sh tasks/deploy",

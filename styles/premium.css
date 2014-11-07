@@ -95,6 +95,11 @@ input[type=number], input[type=search] {
 .product {
   margin-right: -5px;
   margin-left: -15px;
+  margin-bottom: 15px;
+}
+
+.product + .condition {
+  margin-top: 0;
 }
 
 .month-buttons a.side-button {
@@ -242,7 +247,7 @@ select:disabled, select[disabled], select[disabled=""] {
 
 .btn.btn-remove-condition {
   position: absolute;
-  right: 11px;
+  right: 6px;
   margin-top: -11px;
 }
 
@@ -265,7 +270,7 @@ select:disabled, select[disabled], select[disabled=""] {
 }
 
 .condition {
-  margin: 15px 5px;
+  margin: 15px 0;
 }
 
 .condition input[type=number] {

@@ -9,11 +9,9 @@ module.exports = Month;
 
 function Month(number, parent) {
   var self = this;
-  var testSubscribers = 0;
-  var testRetailPrice = 0;
 
   self.name = months[number - 1];
-  self.number = number > 9 ? '' + number : '0' + number;
+  self.number = number;
   self.products = ko.observableArray();
 
   self.$last = ko.computed(function () {
@@ -31,8 +29,6 @@ function Month(number, parent) {
 
     if (obj) {
       product.summaryCondition(obj.summaryCondition);
-      product.testSubscribers(obj.testSubscribers);
-      product.testRetailPrice(obj.testRetailPrice);
       product.defaultSubscribers(obj.defaultSubscribers);
       product.invoiceGroup(config.getByName(config.invoiceGroups, obj.invoiceGroup));
       product.subscribersPackage(config.getByName(config.subscribersPackages, obj.subscribersPackage));
@@ -50,8 +46,6 @@ function Month(number, parent) {
       products: self.products().map(function (p) {
         return {
           summaryCondition: p.summaryCondition(),
-          testSubscribers: p.testSubscribers(),
-          testRetailPrice: p.testRetailPrice(),
           invoiceGroup: p.invoiceGroup() && p.invoiceGroup().name,
           subscribersPackage: p.subscribersPackage() && p.subscribersPackage().name,
           product: p.product() && p.product().name,
@@ -73,7 +67,7 @@ function Month(number, parent) {
           })
         };
       }),
-      number: parseInt(self.number, 10),
+      number: number,
       name: self.name,
     };
   };
