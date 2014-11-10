@@ -16,6 +16,13 @@ b {
   display: block;
 }
 
+.btn-clear-data {
+  margin-right: 5px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  float: right;
+}
+
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   background-color: #fff;
@@ -229,11 +236,11 @@ select:disabled, select[disabled], select[disabled=""] {
   color: #eee;
 }
 
-.btn.btn-add-condition {
+.btn.btn-condition {
   margin-top: 15px;
 }
 
-.btn.btn-add-condition + .dropdown-menu {
+.btn.btn-condition + .dropdown-menu {
   margin-left: 15px;
 }
 

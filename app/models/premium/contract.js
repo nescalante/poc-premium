@@ -19,8 +19,14 @@ function ContractPremium() {
   self.selectedCondition = ko.observable();
   self.demoMode = ko.observable();
 
-  // initial data
-  getInitialMonths().forEach(addMonth);
+  self.clearData = function () {
+    if (confirm('Are you sure you want to clear all data?')) {
+      db('months').clear();
+      createInitialData();
+    }
+  };
+
+  createInitialData();
 
   try
   {
@@ -39,6 +45,10 @@ function ContractPremium() {
       '  Have fun looking over the stack: \n', err.stack);
 
     // everything went wrong, clear months and re-try
+    createInitialData();
+  }
+
+  function createInitialData() {
     self.months([]);
     getInitialMonths().forEach(addMonth);
   }

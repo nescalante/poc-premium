@@ -17,6 +17,9 @@ function db(table) {
       var str = JSON.stringify(data);
 
       global.localStorage[table] = str;
+    },
+    clear: function (table) {
+      global.localStorage.removeItem(table);
     }
   };
 }

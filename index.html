@@ -10,6 +10,7 @@
     <div class="row">
       <h3 class="pull-left">2014</h3>
       <a class="btn btn-primary btn-demo" href="test.html">Test contract</a>
+      <a class="btn btn-danger btn-clear-data" data-bind="click: clearData">Clear data</a>
     </div>
     <!-- ko foreach: months -->
     <div class="row month">
@@ -40,14 +41,6 @@
             <option data-bind="value: $data, text: name"></option>
           </optgroup>
         </select>
-        <div class="col-md-4">
-          <!-- ko if: conditions().length > 1 -->
-          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
-          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
-          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
-          <a class="btn btn-default" data-bind="click: summaryCondition.bind($data, 'sum'), css: { 'active': summaryCondition() == 'sum' }">&</a>
-          <!-- /ko -->
-        </div>
         <div class="row product">
           <div class="col-md-8">
             <div class="row">
@@ -71,19 +64,31 @@
                 <select data-bind="value: invoiceGroup, options: $root.invoiceGroups, optionsText: 'name', optionsCaption: 'Select an invoice group'"></select>
               </div>
             </div>
-            <a class="btn btn-primary btn-add-condition" data-toggle="dropdown">
-              Add condition
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-bind="foreach: $root.billingMethods">
-              <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.addCondition"></a></li>
-            </ul>
           </div>
           <div class="col-md-3">
             <b class="first-title">Default subscribers</b>
             <div>
               <input type="number" data-bind="value: defaultSubscribers" />
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-primary btn-condition" data-toggle="dropdown">
+              Add condition
+              <span class="caret"></span>
+            </a>
+            <!-- ko if: conditions().length > 1 -->
+            <div class="pull-right">
+              <a class="btn btn-default btn-condition" data-bind="click: summaryCondition.bind($data, 'lower'), css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
+              <a class="btn btn-default btn-condition" data-bind="click: summaryCondition.bind($data, 'higher'), css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
+              <a class="btn btn-default btn-condition" data-bind="click: summaryCondition.bind($data, 'average'), css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
+              <a class="btn btn-default btn-condition" data-bind="click: summaryCondition.bind($data, 'sum'), css: { 'active': summaryCondition() == 'sum' }">&</a>
+            </div>
+            <!-- /ko -->
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-bind="foreach: $root.billingMethods">
+              <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="text: name, click: $parent.addCondition"></a></li>
+            </ul>
           </div>
         </div>
         <!-- ko foreach: conditions -->
