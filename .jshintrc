@@ -20,5 +20,5 @@
   "indent": 2,
   "evil": true,
   "node": true,
-  "predef": ["ko", "$", "confirm"]
+  "predef": ["ko"]
 }

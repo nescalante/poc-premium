@@ -20,7 +20,7 @@ function ContractPremium() {
   self.demoMode = ko.observable();
 
   self.clearData = function () {
-    if (confirm('Are you sure you want to clear all data?')) {
+    if (global.confirm('Are you sure you want to clear all data?')) {
       db('months').clear();
       createInitialData();
     }

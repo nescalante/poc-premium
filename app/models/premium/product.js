@@ -56,7 +56,7 @@ function Product(parent) {
   });
 
   self.remove = function () {
-    if (confirm('Are you sure you want to remove this product')) {
+    if (global.confirm('Are you sure you want to remove this product')) {
       var result = parent.products()
         .filter(function (p) { return p !== self; });
 
