@@ -8,7 +8,7 @@ input[type=number], input[type=search] {
   padding-left: 15px;
 }
 
-button {
+button:focus {
   outline: none !important;
 }
 
@@ -24,7 +24,7 @@ b {
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-box-shadow: 0 0 0 1000px white inset;
   background-color: #fff;
   color: #333;
 }
@@ -71,10 +71,6 @@ select.product-selection + div {
   background-color: #fff;
 }
 
-.month:nth-child(even) h5 {
-  border: 1px solid #fff;
-}
-
 .price div:before, div.price:before {
   content: '$';
   position: absolute;
@@ -107,11 +103,6 @@ select.product-selection + div {
 .product {
   margin-right: -5px;
   margin-left: -15px;
-  margin-bottom: 15px;
-}
-
-.product + .condition {
-  margin-top: 0;
 }
 
 .month-buttons a.side-button {
@@ -185,7 +176,7 @@ select.product-selection + div {
 
 .month:nth-child(even) {
   background-color: #eee;
-};
+}
 
 select:disabled, select[disabled], select[disabled=""] {
   border-color: #ccc;
@@ -198,7 +189,7 @@ select:disabled, select[disabled], select[disabled=""] {
   padding-left: 15px;
 }
 
-.product b.first-title {
+.product .first-title {
   position: absolute;
   top: -20px;
 }
@@ -238,6 +229,7 @@ select:disabled, select[disabled], select[disabled=""] {
 
 .btn.btn-condition {
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .btn.btn-condition + .dropdown-menu {
@@ -282,7 +274,7 @@ select:disabled, select[disabled], select[disabled=""] {
 }
 
 .condition {
-  margin: 15px 0;
+  margin: 0 0 15px;
 }
 
 .condition input[type=number] {
