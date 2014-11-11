@@ -37,10 +37,10 @@
         <div class="row" style="margin-bottom: 15px">
           <div class="col-md-12">
             <div class="pull-right">
-              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
-              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
-              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
-              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'sum' }">&sum;</a>
+              <a class="btn btn-default disabled disabled" data-bind="css: { 'btn-primary': summaryCondition() == 'lower' }">&lt;</a>
+              <a class="btn btn-default disabled" data-bind="css: { 'btn-primary': summaryCondition() == 'higher' }">&gt;</a>
+              <a class="btn btn-default disabled" data-bind="css: { 'btn-primary': summaryCondition() == 'average' }">x&#772;</a>
+              <a class="btn btn-default disabled" data-bind="css: { 'btn-primary': summaryCondition() == 'sum' }">&sum;</a>
             </div>
           </div>
         </div>
