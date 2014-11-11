@@ -8,6 +8,7 @@ module.exports = ContractTest;
 
 function ContractTest() {
   var self = this;
+  var testFields = ['testRetailPrice', 'testSubscribers'];
 
   self.months = ko.observableArray();
   self.testResult = ko.computed(getTotal(self.months));
@@ -16,7 +17,7 @@ function ContractTest() {
     var month = new Month(m.number, self);
 
     month.initialize(m);
-    month.products().forEach(setAsTesting);
+    month.products().forEach(function (p) { setAsTesting(p, month); });
     month.testResult = ko.computed(getTotal(month.products));
 
     self.months.push(month);
@@ -32,7 +33,7 @@ function ContractTest() {
     };
   }
 
-  function setAsTesting(product) {
+  function setAsTesting(product, month) {
     product.testRetailPrice = ko.numericObservable();
     product.testSubscribers = ko.numericObservable();
     product.testResult = ko.numericObservable();
@@ -40,11 +41,37 @@ function ContractTest() {
       c.currentRange = ko.observable();
     });
 
-    [product.testRetailPrice, product.testSubscribers].forEach(function (f) {
-      f.subscribe(function () { doTest(product); });
-    });
+    testFields
+      .map(function (i) {
+        return {
+          field: product[i],
+          name: i
+        };
+      }).forEach(function (i) {
+        var last = {};
+
+        i.field.subscribe(function () {
+          changeTestData(product, i.name, last);
+          doTest(product);
+        });
+      });
 
     doTest(product);
+  }
+
+  function changeTestData(product, field, last) {
+    var products = self.months()
+      .map(function (m) { return m.products(); })
+      .reduce(function (x, y) { return x.concat(y); }, []);
+    var i = products.indexOf(product) - 1;
+
+    while (products[++i]) {
+      if (!products[i][field]() || products[i][field]() === last[field]) {
+        products[i][field](product[field]());
+      }
+    }
+
+    last[field] = product[field]();
   }
 
   function doTest(product) {
