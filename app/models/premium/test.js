@@ -34,7 +34,7 @@ function ContractTest() {
 
   function setAsTesting(product) {
     product.testRetailPrice = ko.numericObservable();
-    product.testSubscribers = ko.numericObservable(product.defaultSubscribers());
+    product.testSubscribers = ko.numericObservable();
     product.testResult = ko.numericObservable();
     product.conditions().forEach(function (c) {
       c.currentRange = ko.observable();
@@ -48,7 +48,7 @@ function ContractTest() {
   }
 
   function doTest(product) {
-    var calc = product.calculate(product.testSubscribers(), product.testRetailPrice());
+    var calc = product.calculate(product.testSubscribers() || product.defaultSubscribers(), product.testRetailPrice());
 
     product.testResult(calc.total);
 

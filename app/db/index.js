@@ -5,9 +5,11 @@ module.exports = db;
 function db(table) {
   return {
     get: function () {
-      if (global.localStorage && global.localStorage[table]) {
+      var item = global.localStorage.getItem(table);
+
+      if (item) {
         // its evalution baby!
-        return eval('(' + global.localStorage[table] + ')');
+        return eval('(' + item + ')');
       }
       else {
         return [];
@@ -16,7 +18,7 @@ function db(table) {
     save: function (data) {
       var str = JSON.stringify(data);
 
-      global.localStorage[table] = str;
+      global.localStorage.setItem(table, str);
     },
     clear: function (table) {
       global.localStorage.removeItem(table);

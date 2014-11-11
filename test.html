@@ -18,24 +18,28 @@
       </div>
       <div class="col-xs-10 month-detail">
         <!-- ko foreach: products -->
-        <h4 class="col-md-4" data-bind="text: (product() && product().name) + ' - ' + category()"></h4>
-        <div class="col-md-4">
-          <!-- ko if: conditions().length > 1 -->
-          <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
-          <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
-          <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
-          <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'sum' }">&</a>
-          <!-- /ko -->
-        </div>
-        <div class="row product">
+        <h4 class="col-md-8" data-bind="text: (product() && product().name) + (category() ? ' - ' + category() : '')"></h4>
+        <div class="row product" data-bind="visible: subscribersPackage() || invoiceGroup()">
           <div class="col-md-8">
-            <div class="row">
+            <div class="row" data-bind="visible: subscribersPackage">
               <label class="col-md-3">Package</label>
               <span class="col-md-6" data-bind="text: subscribersPackage() && subscribersPackage().name"><span>
             </div>
-            <div class="row">
+            <div class="row" data-bind="visible: invoiceGroup">
               <label class="col-md-3">Invoice Group</label>
               <span class="col-md-6" data-bind="text: invoiceGroup() && invoiceGroup().name"><span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="pull-right">
+              <!-- ko if: conditions().length > 1 -->
+              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'lower' }">&lt;</a>
+              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'higher' }">&gt;</a>
+              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'average' }">x&#772;</a>
+              <a class="btn btn-default" data-bind="css: { 'active': summaryCondition() == 'sum' }">&sum;</a>
+              <!-- /ko -->
             </div>
           </div>
         </div>
@@ -57,11 +61,11 @@
           </div>
           <div class="col-md-4">
             <label>Test subs. </label>
-            <input type="number" data-bind="value: testSubscribers, valueUpdate: 'afterkeydown'" />
+            <input type="number" data-bind="attr: { placeholder: defaultSubscribers }, value: testSubscribers, valueUpdate: 'afterkeydown'" />
           </div>
           <div class="col-md-4">
             <label>Retail price </label>
-            <input type="number" data-bind="value: testRetailPrice, valueUpdate: 'afterkeydown'" />
+            <input type="number" placeholder="0" data-bind="value: testRetailPrice, valueUpdate: 'afterkeydown'" />
           </div>
         </div>
         <hr>
@@ -112,7 +116,7 @@
         <span data-bind="text: to() ? to() : '&infin;'"></span>
       </div>
       <div class="col-md-6">
-        <span data-bind="text: percentage() + '%'"></span>
+        <span data-bind="text: percentage"></span>
       </div>
     </div>
     <!-- /ko -->
