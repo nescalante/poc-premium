@@ -9,7 +9,8 @@
   <div class="container" data-bind="css: { 'ready': true }">
     <div class="row">
       <h3 class="pull-left">2014</h3>
-      <a class="btn btn-primary btn-demo" href="test.html">Test contract</a>
+      <a class="btn btn-default btn-demo" data-bind="click: test" href="test.html">Test contract</a>
+      <a class="btn btn-primary btn-save" data-bind="click: save">Save data</a>
       <a class="btn btn-danger btn-clear-data" data-bind="click: clearData">Clear data</a>
     </div>
     <!-- ko foreach: months -->

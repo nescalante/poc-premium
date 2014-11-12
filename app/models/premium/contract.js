@@ -18,6 +18,8 @@ function ContractPremium() {
   self.months = ko.observableArray();
   self.selectedCondition = ko.observable();
   self.demoMode = ko.observable();
+  self.test = test;
+  self.save = save;
 
   self.clearData = function () {
     if (global.confirm('Are you sure you want to clear all data?')) {
@@ -59,6 +61,11 @@ function ContractPremium() {
     });
   }
 
+  function test() {
+    save();
+    global.location.href = 'test.html';
+  }
+
   function save() {
     var data = self.months().map(function (m) {
       return m.getMonthData();
@@ -67,16 +74,9 @@ function ContractPremium() {
     db('months').save(data);
   }
 
-  global.onbeforeunload = save;
-
   function addMonth(month) {
     self.months.push(month);
   }
 
-  (function saveForever() {
-    setInterval(function () {
-      save();
-      saveForever();
-    }, 3000);
-  })();
+  global.onbeforeunload = save;
 }
