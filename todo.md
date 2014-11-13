@@ -9,4 +9,4 @@
 - [x] clean all
 - [x] si borro test subscribers, deberia usar default subscribers
 - [x] agregar que cuando cambio test subs se arrastre para los otros meses
-- [ ] copiar meses desde el origen y seleccionar rango
+- [x] copiar meses desde el origen y seleccionar rango
