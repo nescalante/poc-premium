@@ -76,6 +76,7 @@ function Product(parent) {
       condition = new Condition(billingMethod, self, (obj.ranges && obj.ranges.length));
 
       condition.price(obj.price);
+      condition.minimumGuaranteed(obj.minimumGuaranteed);
       condition.priceMethod(config.getByName(config.priceMethods, obj.priceMethod));
 
       (obj.ranges || []).forEach(condition.addRange);

@@ -302,6 +302,20 @@ select:disabled, select[disabled], select[disabled=""] {
   cursor: pointer;
 }
 
+.condition-info .minimum-guaranteed {
+  margin-left: 35px;
+  height: 50px;
+}
+
+.condition-info .minimum-guaranteed input[type=number] {
+  margin-bottom: 15px;
+  width: 60%;
+}
+
+.condition-info .condition-detail label {
+  display: block;
+}
+
 .btn.btn-remove-product {
   margin-bottom: 20px;
 }

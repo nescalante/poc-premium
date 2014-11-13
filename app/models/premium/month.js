@@ -55,6 +55,7 @@ function Month(number, parent) {
             return {
               billingMethod: c.billingMethod.name,
               priceMethod: c.priceMethod() && c.priceMethod().name,
+              minimumGuaranteed: c.minimumGuaranteed(),
               price: c.price(),
               ranges: c.ranges().map(function (r) {
                 return {

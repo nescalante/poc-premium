@@ -49,7 +49,8 @@
         <div class="row condition" data-bind="css: billingMethod.template">
           <h4 data-bind="text: billingMethod.name" class="col-md-4"></h4>
           <div class="col-md-8 condition-info">
-            <div class="col-md-6">
+            <div class="col-md-6 condition-detail">
+              <label data-bind="visible: minimumGuaranteed, text: minimumGuaranteed() + ' subscribers guaranteed'"></label>
               <label data-bind="visible: billingMethod.isActualSubscribers, text: priceMethod() && priceMethod().name"></label>
             </div>
             <div class="col-md-6" data-bind="template: billingMethod.template"></div>

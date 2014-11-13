@@ -13,6 +13,7 @@ function Condition(billingMethod, parent, preventRangeInit) {
 
   self.billingMethod = billingMethod;
   self.priceMethod = ko.observable(priceMethods.range);
+  self.minimumGuaranteed = ko.numericObservable();
   self.price = ko.numericObservable();
   self.ranges = ko.observableArray();
 
@@ -61,14 +62,17 @@ function Condition(billingMethod, parent, preventRangeInit) {
       total = self.price();
     }
     else if (billingMethod === billingMethods.revenueShare && range) {
-      total = retailPrice * (range.percentage() / 100) * subscribers;
+      total = retailPrice * (range.percentage() / 100) * remaining;
     }
     else if (billingMethod === billingMethods.actualSubscribers && range) {
+      if (self.minimumGuaranteed() && remaining < self.minimumGuaranteed()) {
+        remaining = self.minimumGuaranteed();
+      }
+
       if (self.priceMethod() === priceMethods.range) {
-        total = range.price() * subscribers;
+        total = range.price() * remaining;
       }
       else if (self.priceMethod() === priceMethods.incremental) {
-
         self.ranges().forEach(function (r) {
           var lastTo = last ? last.to() : 0;
 
