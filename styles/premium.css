@@ -38,6 +38,14 @@ select.product-selection {
   padding: 0;
 }
 
+select.product-selection.animate {
+  -webkit-animation: blink 0.5s ease;
+}
+
+select.product-selection.animate ~ .product, select.product-selection.animate ~ .condition-section {
+  -webkit-animation: shadow 1.5s ease;
+}
+
 select.product-selection:hover {
   text-decoration: underline;
 }
@@ -322,4 +330,59 @@ select:disabled, select[disabled], select[disabled=""] {
 
 .btn.btn-remove-product + hr {
   margin-top: 0;
+}
+
+.clone-products {
+  position: relative;
+}
+
+.clone-products > div {
+  position: absolute;
+  z-index: 1;
+  width: 220px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  top: 40px;
+  left: 40px;
+}
+
+.clone-products > div select {
+  height: 26px;
+  width: 150px;
+}
+
+.clone-products > div input[type=number] {
+  margin-top: 5px;
+  width: 60px;
+}
+
+.clone-products > div .footer {
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px solid #ddd;
+}
+
+.clone-products > div .footer a {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    text-shadow: 0 0 10px #666;
+  }
+  100% {
+    text-shadow: 0 0 0 #666;
+  }
+}
+
+@-webkit-keyframes shadow {
+  0% {
+    background-color: #eee;
+  }
+  100% {
+    background-color: #fff;
+  }
 }

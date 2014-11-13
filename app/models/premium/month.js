@@ -14,6 +14,39 @@ function Month(number, parent) {
   self.number = number;
   self.products = ko.observableArray();
 
+  self.showClone = ko.observable();
+  self.cloneProduct = ko.observable();
+  self.cloneMonths = ko.numericObservable();
+
+  self.clone = function () {
+    var i = parent.months().indexOf(self) + 1;
+    var end = i + (self.cloneMonths() || 0);
+    var month;
+
+    for (; i < end; i++) {
+      month = parent.months()[i];
+
+      if (month && self.cloneProduct()) {
+        cloneProduct(self.cloneProduct());
+      }
+      else if (month) {
+        self.products().forEach(cloneProduct);
+      }
+    }
+
+    self.hideClone();
+
+    function cloneProduct(product) {
+      month.addProduct(product.getProductData());
+    }
+  };
+
+  self.hideClone = function () {
+    self.cloneProduct(null);
+    self.cloneMonths(null);
+    self.showClone(false);
+  };
+
   self.$last = ko.computed(function () {
     return parent.months()[parent.months().length - 1] === self;
   });
@@ -39,34 +72,18 @@ function Month(number, parent) {
     }
 
     self.products.push(product);
+
+    if (!obj) {
+      product.animate(true);
+      global.location.href = '#product-' + number + '-' + self.products().indexOf(product);
+      global.scrollTo(global.scrollX, global.scrollY - 10);
+    }
   };
 
   self.getMonthData = function () {
     return {
       products: self.products().map(function (p) {
-        return {
-          summaryCondition: p.summaryCondition(),
-          invoiceGroup: p.invoiceGroup() && p.invoiceGroup().name,
-          subscribersPackage: p.subscribersPackage() && p.subscribersPackage().name,
-          product: p.product() && p.product().name,
-          category: p.category(),
-          defaultSubscribers: p.defaultSubscribers(),
-          conditions: p.conditions().map(function (c) {
-            return {
-              billingMethod: c.billingMethod.name,
-              priceMethod: c.priceMethod() && c.priceMethod().name,
-              minimumGuaranteed: c.minimumGuaranteed(),
-              price: c.price(),
-              ranges: c.ranges().map(function (r) {
-                return {
-                  to: r.to(),
-                  price: r.price(),
-                  percentage: r.percentage(),
-                };
-              })
-            };
-          })
-        };
+        return p.getProductData();
       }),
       number: number,
       name: self.name,

@@ -20,6 +20,18 @@ function Product(parent) {
   self.defaultSubscribers = ko.numericObservable();
   self.conditions = ko.observableArray();
   self.summaryCondition = ko.observable('lower');
+  self.animate = ko.observable();
+  self.month = function () { return parent; };
+  self.name = ko.computed(function () {
+    return self.product() && self.product().name;
+  });
+
+  self.equals = function (product) {
+    return product.product() === self.product() &&
+      product.invoiceGroup() === self.invoiceGroup() &&
+      product.subscribersPackage() === self.subscribersPackage() &&
+      product.category() === self.category();
+  };
 
   self.calculate = function (subscribers, retailPrice) {
     var total, selected;
@@ -56,7 +68,7 @@ function Product(parent) {
   });
 
   self.remove = function () {
-    if (global.confirm('Are you sure you want to remove this product')) {
+    if (global.confirm('Are you sure you want to remove this product?')) {
       var result = parent.products()
         .filter(function (p) { return p !== self; });
 
@@ -83,5 +95,31 @@ function Product(parent) {
     }
 
     self.conditions.push(condition);
+  };
+
+  self.getProductData = function () {
+    return {
+      summaryCondition: self.summaryCondition(),
+      invoiceGroup: self.invoiceGroup() && self.invoiceGroup().name,
+      subscribersPackage: self.subscribersPackage() && self.subscribersPackage().name,
+      product: self.product() && self.product().name,
+      category: self.category(),
+      defaultSubscribers: self.defaultSubscribers(),
+      conditions: self.conditions().map(function (c) {
+        return {
+          billingMethod: c.billingMethod.name,
+          priceMethod: c.priceMethod() && c.priceMethod().name,
+          minimumGuaranteed: c.minimumGuaranteed(),
+          price: c.price(),
+          ranges: c.ranges().map(function (r) {
+            return {
+              to: r.to(),
+              price: r.price(),
+              percentage: r.percentage(),
+            };
+          })
+        };
+      })
+    };
   };
 }

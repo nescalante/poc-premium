@@ -23,7 +23,7 @@
               +
             </a>
           </div>
-          <!-- ko if: !products().length -->
+          <!-- ko if: !products().length && $root.months().filter(function (m) { return m.products().length; }).length -->
           <div class="dropdown">
             <a class="btn side-button side-copy dropdown-toggle" type="button" data-toggle="dropdown">
               C
@@ -33,11 +33,28 @@
             </ul>
           </div>
           <!-- /ko -->
+          <!-- ko if: products().length -->
+          <div class="clone-products">
+            <a class="btn side-button side-copy" data-bind="click: showClone.bind($data, true)">
+              C
+            </a>
+            <div data-bind="visible: showClone">
+              Clone <select data-bind="value: cloneProduct, options: products, optionsText: 'name', optionsCaption: 'All products'"></select><br>
+              for <input type="number" data-bind="value: cloneMonths" /> months<br>
+              <div class="footer">
+                <div class="pull-right">
+                  <a data-bind="click: hideClone">Cancel</a>
+                  <a class="btn btn-default" data-bind="click: clone">Apply</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /ko -->
         </div>
       </div>
       <div class="col-xs-10 month-detail">
         <!-- ko foreach: products -->
-        <select class="col-md-4 product-selection" data-bind="value: product, optionsText: 'name', optionsCaption: 'Select a product', foreach: $root.serviceTypes">
+        <select class="col-md-4 product-selection" data-bind="css: { animate: animate }, attr: { id: 'product-' + $parent.number + '-' + $index() }, value: product, optionsText: 'name', optionsCaption: 'Select a product', foreach: $root.serviceTypes">
           <optgroup data-bind="attr: { label: name }, foreach: products">
             <option data-bind="value: $data, text: name"></option>
           </optgroup>
@@ -73,7 +90,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row condition-section">
           <div class="col-md-12">
             <a class="btn btn-primary btn-condition" data-toggle="dropdown">
               Add condition
